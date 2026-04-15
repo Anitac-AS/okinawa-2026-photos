@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沖繩初體驗 🌺 羽家行程手帳</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #87CEEB;
+    --sky-light: #E8F6FF;
+    --ocean: #2B9EB3;
+    --ocean-dark: #1A7A8C;
+    --sand: #FFF3DC;
+    --sand-dark: #FFDFA0;
+    --coral: #FF7B7B;
+    --coral-light: #FFE8E8;
+    --mint: #7ECBA1;
+    --mint-light: #E8F8EF;
+    --sun: #FFD166;
+    --sun-light: #FFF7DC;
+    --text: #2C3E50;
+    --text-sub: #6B8096;
+    --white: #FFFFFF;
+    --card-shadow: 0 4px 20px rgba(43,158,179,0.12);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--sky-light);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(160deg, var(--ocean) 0%, var(--sky) 100%);
+    padding: 48px 24px 88px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 60px;
+    background: var(--sky-light);
+    border-radius: 60px 60px 0 0;
+  }
+  /* 手繪波浪 SVG 插圖 */
+  .header-illustration {
+    position: absolute;
+    bottom: 20px; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 12px;
+    pointer-events: none;
+  }
+  .header-emoji-float {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .header h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(22px, 6vw, 34px);
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    position: relative;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    margin-top: 6px;
+    font-weight: 500;
+    position: relative;
+  }
+  .header-badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+  }
+
+  /* ── INFO STRIP ── */
+  .info-strip {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    margin: -28px 0 0;
+    box-shadow: var(--card-shadow);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .info-item { text-align: center; }
+  .info-label {
+    font-size: 9px;
+    color: var(--text-sub);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1px;
+  }
+  .info-value {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--ocean-dark);
+  }
+  .info-item + .info-item { border-left: 1.5px solid #EEF4F6; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--ocean-dark);
+    margin: 28px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--sky), transparent);
+    border-radius: 2px;
+  }
+
+  /* ── CREW COLLAPSED (折疊版) ── */
+  .crew-compact {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .crew-compact-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .crew-compact-avatars {
+    display: flex;
+    gap: -4px;
+  }
+  .crew-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: 2px solid white;
+  }
+  .crew-avatar.a { background: #D0EEFF; margin-right: -8px; z-index: 2; }
+  .crew-avatar.b { background: #D0F5E5; }
+  .crew-compact-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+  .crew-compact-sub {
+    font-size: 11px;
+    color: var(--text-sub);
+  }
+  .crew-toggle {
+    font-size: 16px;
+    color: var(--text-sub);
+    transition: transform 0.3s;
+  }
+  .crew-compact.open .crew-toggle { transform: rotate(180deg); }
+  .crew-detail {
+    display: none;
+    padding: 0 20px 16px;
+    border-top: 1.5px dashed #EEF4F6;
+  }
+  .crew-compact.open .crew-detail { display: block; }
+  .crew-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .crew-card {
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .crew-card.us { background: linear-gradient(135deg, #E8F6FF, #D0EEFF); }
+  .crew-card.mei { background: linear-gradient(135deg, var(--mint-light), #D0F5E5); }
+  .crew-emoji { font-size: 24px; margin-bottom: 5px; }
+  .crew-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--ocean-dark);
+    margin-bottom: 4px;
+  }
+  .crew-desc { font-size: 11px; color: var(--text-sub); line-height: 1.6; }
+
+  /* ── DAY CARD ── */
+  .day-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .day-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(43,158,179,0.18);
+  }
+  .day-header {
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .day-badge {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 5px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .day-badge.d1 { background: #E8F4FF; color: var(--ocean-dark); }
+  .day-badge.d2 { background: var(--mint-light); color: #1A8050; }
+  .day-badge.d3 { background: #EEE8FF; color: #6B3FA0; }
+  .day-badge.d4 { background: var(--coral-light); color: #C04040; }
+  .day-badge.d5 { background: var(--sun-light); color: #A07010; }
+  .day-badge.cl { background: var(--mint-light); color: #1A8050; }
+  .day-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .day-toggle {
+    font-size: 16px;
+    color: var(--text-sub);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .day-card.open .day-toggle { transform: rotate(180deg); }
+  .day-body {
+    display: none;
+    padding: 0 18px 18px;
+    border-top: 1.5px dashed #EEF4F6;
+    animation: fadeIn 0.25s ease;
+  }
+  .day-card.open .day-body { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── 手繪風插圖區 ── */
+  .day-illus {
+    margin: 14px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .day-illus svg {
+    flex-shrink: 0;
+  }
+  .day-illus-caption {
+    font-size: 11px;
+    color: var(--text-sub);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { margin-top: 14px; }
+  .tl-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 16px; top: 30px;
+    width: 2px;
+    height: calc(100% + 2px);
+    background: #EEF4F6;
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-dot {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .tl-dot.travel { background: #E8F4FF; }
+  .tl-dot.food   { background: var(--sun-light); }
+  .tl-dot.play   { background: var(--mint-light); }
+  .tl-dot.shop   { background: #F0E8FF; }
+  .tl-dot.sleep  { background: var(--coral-light); }
+  .tl-dot.alert  { background: #FFF0E0; }
+  .tl-content { flex: 1; padding-top: 5px; }
+  .tl-time {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-sub);
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.3px;
+  }
+  .tl-main { font-size: 14px; font-weight: 700; color: var(--text); margin: 2px 0; }
+  .tl-sub  { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+
+  /* ── FOOD ── */
+  .food-section { margin-top: 14px; }
+  .food-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 7px;
+  }
+  .food-chip {
+    background: var(--sky-light);
+    border: 1.5px solid #D6EEF6;
+    border-radius: var(--radius-sm);
+    padding: 9px 10px;
+    position: relative;
+  }
+  .food-chip.star { background: var(--sun-light); border-color: var(--sand-dark); }
+  .food-chip-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .food-chip-desc { font-size: 11px; color: var(--text-sub); line-height: 1.4; }
+  .food-star { position: absolute; top: 7px; right: 8px; font-size: 11px; }
+
+  /* ── ALERT / RAIN ── */
+  .alert-box {
+    background: #FFF8EC;
+    border: 1.5px solid #FFDFA0;
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #7A5500;
+    line-height: 1.6;
+  }
+  .alert-box strong { color: #C07000; }
+  .mapcode {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #F0F4F6;
+    border: 1px solid #C8DDE4;
+    border-radius: 8px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-family: 'Nunito', monospace;
+    font-weight: 700;
+    color: var(--ocean-dark);
+    margin-top: 4px;
+    cursor: copy;
+    letter-spacing: 0.3px;
+  }
+  .mapcode::before { content: "📍"; font-size: 10px; }
+  .tl-mapcode { margin-top: 3px; }
+  .rain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--sky-light);
+    border: 1.5px solid var(--sky);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--ocean-dark);
+    font-weight: 700;
+    margin-top: 10px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist { margin-top: 6px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #F0F4F6;
+    cursor: pointer;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 2px solid #C8DDE4;
+    flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .check-box.checked { background: var(--mint); border-color: var(--mint); color: white; font-size: 11px; }
+  .check-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+  .check-text.done { text-decoration: line-through; color: var(--text-sub); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 36px 24px 48px;
+    color: var(--text-sub);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer-illus { margin-bottom: 12px; }
+
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-top: 1.5px solid #D6EEF6;
+    display: flex;
+    z-index: 1000;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 4px 8px;
+    cursor: pointer;
+    gap: 3px;
+    transition: color 0.15s;
+    border: none;
+    background: none;
+    color: var(--text-sub);
+    font-family: 'Noto Sans TC', sans-serif;
+    text-decoration: none;
+  }
+  .tab-item.active { color: var(--ocean); }
+  .tab-icon { font-size: 20px; line-height: 1; }
+  .tab-label { font-size: 10px; font-weight: 700; letter-spacing: 0.3px; }
+  body { padding-bottom: 72px; }
+
+  /* ── PAGE SECTIONS ── */
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+
+  /* ── FLIGHT CARDS ── */
+  .flight-wrap { padding: 0 0 8px; }
+  .boarding-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .bc-header {
+    background: linear-gradient(135deg, var(--ocean), var(--ocean-dark));
+    color: white;
+    padding: 14px 18px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .bc-airline { font-size: 11px; opacity: 0.85; margin-bottom: 2px; }
+  .bc-flight { font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; }
+  .bc-dir { font-size: 11px; opacity: 0.8; }
+  .bc-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .bc-route {
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .bc-city { flex: 1; }
+  .bc-city-code { font-family: 'Nunito', sans-serif; font-size: 28px; font-weight: 900; color: var(--ocean-dark); line-height: 1; }
+  .bc-city-name { font-size: 11px; color: var(--text-sub); margin-top: 2px; }
+  .bc-time { font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); margin-top: 4px; }
+  .bc-arrow {
+    flex: 0;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-sub);
+  }
+  .bc-arrow-line {
+    width: 60px;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--sky), var(--ocean), var(--sky));
+    position: relative;
+  }
+  .bc-arrow-line::after { content:'✈'; position:absolute; top:-9px; right:-2px; font-size:14px; color:var(--ocean); }
+  .bc-duration { font-size: 10px; color: var(--text-sub); }
+  .bc-city.right { text-align: right; }
+  .bc-footer {
+    border-top: 1.5px dashed #D6EEF6;
+    padding: 12px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .bc-info-item { }
+  .bc-info-label { font-size: 9px; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .bc-info-val { font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 800; color: var(--text); }
+  .bc-info-val.code { color: var(--ocean-dark); letter-spacing: 1px; }
+  .bc-checkin-btn {
+    display: block;
+    margin: 0 18px 14px;
+    background: var(--sun);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7A5500;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  /* ── BOOKING WALLET ── */
+  .wallet-grid { display: flex; flex-direction: column; gap: 12px; }
+  .booking-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+  .bk-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .bk-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .bk-icon.hotel { background: var(--coral-light); }
+  .bk-icon.hotel2 { background: #FFF0D0; }
+  .bk-icon.car   { background: var(--mint-light); }
+  .bk-icon.ticket { background: var(--sky-light); }
+  .bk-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .bk-sub   { font-size: 11px; color: var(--text-sub); margin-top: 1px; }
+  .bk-toggle { margin-left: auto; font-size: 16px; color: var(--text-sub); transition: transform 0.3s; }
+  .booking-card.open .bk-toggle { transform: rotate(180deg); }
+  .bk-body {
+    display: none;
+    padding: 0 18px 16px;
+    border-top: 1.5px dashed #EEF4F6;
+  }
+  .booking-card.open .bk-body { display: block; }
+  .bk-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+    margin-bottom: 14px;
+  }
+  .bk-detail-item { }
+  .bk-detail-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-sub); margin-bottom: 3px; }
+  .bk-detail-val { font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800; color: var(--text); }
+  .bk-detail-val.highlight { color: var(--ocean-dark); }
+  .bk-detail-full { grid-column: 1 / -1; }
+  .bk-action-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .bk-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: opacity 0.15s;
+  }
+  .bk-btn:hover { opacity: 0.85; }
+  .bk-btn.primary { background: var(--ocean); color: white; }
+  .bk-btn.secondary { background: var(--sky-light); color: var(--ocean-dark); border: 1.5px solid #C8DDE4; }
+  .bk-btn.maps { background: #E8F5E9; color: #2E7D32; border: 1.5px solid #C8E6C9; }
+  .bk-separator { height: 1px; background: #EEF4F6; margin: 12px 0; }
+
+  /* ── EMERGENCY PAGE ── */
+  .emergency-wrap { }
+  .sos-banner {
+    background: linear-gradient(135deg, #FF4444, #CC0000);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    color: white;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .sos-icon { font-size: 36px; flex-shrink: 0; }
+  .sos-title { font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 900; margin-bottom: 3px; }
+  .sos-sub { font-size: 12px; opacity: 0.9; }
+  .emergency-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .ec-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .ec-icon { font-size: 22px; }
+  .ec-title { font-size: 14px; font-weight: 700; color: var(--text); flex: 1; }
+  .ec-toggle { font-size: 14px; color: var(--text-sub); transition: transform 0.3s; }
+  .emergency-card.open .ec-toggle { transform: rotate(180deg); }
+  .ec-body { display: none; padding: 0 16px 14px; border-top: 1.5px dashed #EEF4F6; }
+  .emergency-card.open .ec-body { display: block; }
+  .call-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #F0F4F6;
+  }
+  .call-item:last-child { border-bottom: none; }
+  .call-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .call-sub  { font-size: 11px; color: var(--text-sub); }
+  .call-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--mint-light);
+    border: 1.5px solid var(--mint);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1A8050;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: 'Nunito', sans-serif;
+  }
+  .phrase-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #F0F4F6;
+  }
+  .phrase-item:last-child { border-bottom: none; }
+  .phrase-jp { font-size: 15px; font-weight: 700; color: var(--ocean-dark); margin-bottom: 2px; }
+  .phrase-zh { font-size: 12px; color: var(--text-sub); }
+  .phrase-kana { font-size: 11px; color: var(--text-sub); opacity: 0.7; }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-sheet {
+    background: white;
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 0 0 env(safe-area-inset-bottom, 16px);
+    animation: slideUp 0.28s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-handle {
+    width: 40px; height: 4px;
+    background: #D0D8E0;
+    border-radius: 2px;
+    margin: 12px auto 0;
+  }
+  .modal-header {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 1.5px solid #EEF4F6;
+  }
+  .modal-emoji { font-size: 28px; flex-shrink: 0; }
+  .modal-title { font-size: 17px; font-weight: 700; color: var(--text); }
+  .modal-subtitle { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+  .modal-close {
+    margin-left: auto;
+    background: #F0F4F6;
+    border: none;
+    border-radius: 50%;
+    width: 30px; height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .modal-body { padding: 16px 20px; }
+  .modal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .modal-info-item { }
+  .modal-info-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-sub); margin-bottom: 3px; }
+  .modal-info-val { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+  .modal-action-stack { display: flex; flex-direction: column; gap: 8px; }
+  .modal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: opacity 0.15s;
+  }
+  .modal-btn:hover { opacity: 0.88; }
+  .modal-btn.maps-btn  { background: #E8F5E9; color: #1B5E20; }
+  .modal-btn.book-btn  { background: var(--ocean); color: white; }
+  .modal-btn.info-btn  { background: var(--sky-light); color: var(--ocean-dark); border: 1.5px solid #C8DDE4; }
+  .modal-note {
+    background: var(--sun-light);
+    border: 1.5px solid var(--sand-dark);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #7A5500;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+  /* 讓 timeline 景點可點擊 */
+  .tl-clickable {
+    cursor: pointer;
+  }
+  .tl-clickable .tl-main {
+    color: var(--ocean-dark);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+  }
+  .tl-clickable:hover .tl-main { color: var(--ocean); }
+
+  /* ── TABS top nav ── */
+  .top-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 0 6px;
+    margin-top: 0;
+  }
+  .top-tab {
+    flex-shrink: 0;
+    background: white;
+    border: 2px solid #D6EEF6;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-sub);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  .top-tab.active {
+    background: var(--ocean);
+    border-color: var(--ocean);
+    color: white;
+  }
+
+  @media (min-width: 600px) {
+    .main { padding: 0 24px 80px; }
+    .day-header { padding: 16px 22px; }
+    .day-body { padding: 0 22px 22px; }
+  }
+
+  /* ── 必買必吃圖鑑 GUIDE ── */
+  .guide-filter {
+    display: flex;
+    gap: 6px;
+    padding: 14px 0 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .guide-filter::-webkit-scrollbar { display: none; }
+  .guide-filter-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 2px solid #D6EEF6;
+    background: white;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-sub);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  .guide-filter-btn.active {
+    background: var(--ocean);
+    border-color: var(--ocean);
+    color: white;
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+    padding-bottom: 8px;
+  }
+  .guide-card {
+    background: white;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .guide-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(43,158,179,0.2);
+  }
+  .guide-card-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    background: #f0f4f6;
+  }
+  .guide-card-body { padding: 8px 10px 10px; }
+  .guide-cat-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-bottom: 4px;
+  }
+  .guide-cat-tag.drugstore { background: #E8F4FF; color: var(--ocean-dark); }
+  .guide-cat-tag.snack     { background: var(--sun-light); color: #A07010; }
+  .guide-cat-tag.food      { background: var(--coral-light); color: #C04040; }
+  .guide-cat-tag.souvenir  { background: var(--mint-light); color: #1A8050; }
+  .guide-card-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+  .guide-card-where {
+    font-size: 11px;
+    color: var(--text-sub);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .guide-card-price {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ocean-dark);
+    margin-top: 3px;
+  }
+  /* 圖片燈箱 */
+  .img-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 2000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 20px;
+  }
+  .img-lightbox.open { display: flex; }
+  .img-lightbox-img {
+    max-width: 100%;
+    max-height: 68vh;
+    border-radius: 14px;
+    object-fit: contain;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+  .img-lightbox-info { text-align: center; color: white; }
+  .img-lightbox-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .img-lightbox-meta { font-size: 13px; opacity: 0.7; }
+  .img-lightbox-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    border: none; color: white;
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <!-- 手繪風 header SVG 插圖 -->
+  <svg style="position:absolute;bottom:28px;left:0;right:0;width:100%;pointer-events:none" viewBox="0 0 400 60" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+    <!-- 海浪手繪感 -->
+    <path d="M0 40 Q30 28 60 38 Q90 48 120 36 Q150 24 180 38 Q210 50 240 36 Q270 22 300 38 Q330 52 360 36 Q385 26 400 38 L400 60 L0 60Z" fill="rgba(255,255,255,0.18)" />
+    <path d="M0 48 Q40 36 80 46 Q120 56 160 44 Q200 32 240 44 Q280 56 320 42 Q360 30 400 44 L400 60 L0 60Z" fill="rgba(255,255,255,0.12)" />
+    <!-- 手繪小魚 left -->
+    <g transform="translate(24,20)" opacity="0.7">
+      <ellipse cx="0" cy="0" rx="9" ry="5" fill="white" opacity="0.6"/>
+      <path d="M-9 0 L-15 -4 L-15 4Z" fill="white" opacity="0.6"/>
+      <circle cx="5" cy="-1" r="1.5" fill="rgba(0,0,0,0.2)"/>
+    </g>
+    <!-- 手繪小魚 right -->
+    <g transform="translate(360,18) scale(-1,1)" opacity="0.7">
+      <ellipse cx="0" cy="0" rx="8" ry="4.5" fill="white" opacity="0.6"/>
+      <path d="M-8 0 L-14 -3.5 L-14 3.5Z" fill="white" opacity="0.6"/>
+      <circle cx="4.5" cy="-0.5" r="1.2" fill="rgba(0,0,0,0.2)"/>
+    </g>
+    <!-- 手繪小螃蟹 -->
+    <g transform="translate(195,14)" opacity="0.75">
+      <ellipse cx="0" cy="0" rx="7" ry="5" fill="white" opacity="0.7"/>
+      <circle cx="-3" cy="-2" r="1.5" fill="white" opacity="0.6"/>
+      <circle cx="3" cy="-2" r="1.5" fill="white" opacity="0.6"/>
+      <line x1="-6" y1="1" x2="-11" y2="-1" stroke="white" stroke-width="1.2" opacity="0.6"/>
+      <line x1="6" y1="1" x2="11" y2="-1" stroke="white" stroke-width="1.2" opacity="0.6"/>
+      <line x1="-5" y1="3" x2="-9" y2="5" stroke="white" stroke-width="1.2" opacity="0.6"/>
+      <line x1="5" y1="3" x2="9" y2="5" stroke="white" stroke-width="1.2" opacity="0.6"/>
+    </g>
+    <!-- 手繪貝殼 -->
+    <g transform="translate(80,30)" opacity="0.6">
+      <path d="M0 0 Q4 -6 8 0 Q4 4 0 0Z" fill="white"/>
+      <line x1="2" y1="-1" x2="1" y2="3" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+      <line x1="4" y1="-2" x2="4" y2="3" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+      <line x1="6" y1="-1" x2="7" y2="3" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+    </g>
+    <g transform="translate(305,32)" opacity="0.6">
+      <path d="M0 0 Q4 -6 8 0 Q4 4 0 0Z" fill="white"/>
+      <line x1="2" y1="-1" x2="1" y2="3" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+      <line x1="4" y1="-2" x2="4" y2="3" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+      <line x1="6" y1="-1" x2="7" y2="3" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+    </g>
+  </svg>
+
+  <span class="header-emoji-float">🌺</span>
+  <h1>沖繩初體驗・羽家行程手帳</h1>
+  <p class="header-sub">第一次帶雙寶出國，一起衝！🌊</p>
+  <div class="header-badges">
+    <span class="badge">📅 5/15-5/19</span>
+    <span class="badge">🏨 北谷麗嘉 4晚</span>
+    <span class="badge">🚗 雙車雙家同行</span>
+  </div>
+</div>
+
+<!-- ── SECTION: 行程 ── -->
+<div id="sec-itinerary" class="page-section active">
+<div class="main">
+  <!-- INFO STRIP -->
+  <div class="info-strip">
+    <div class="info-item">
+      <div class="info-label">天數</div>
+      <div class="info-value">5天4夜</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">基地</div>
+      <div class="info-value">北谷麗嘉</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">兩家合計</div>
+      <div class="info-value">4大 3小 👶</div>
+    </div>
+  </div>
+
+  <!-- 快速跳轉 tabs -->
+  <div class="top-tabs">
+    <button class="top-tab active" onclick="jumpDay('d1')">D1 抵達</button>
+    <button class="top-tab" onclick="jumpDay('d2')">D2 兒童王國</button>
+    <button class="top-tab" onclick="jumpDay('d3')">D3 PARCO</button>
+    <button class="top-tab" onclick="jumpDay('d4')">D4 南部</button>
+    <button class="top-tab" onclick="jumpDay('d5')">D5 回家</button>
+  </div>
+
+  <!-- DAYS -->
+  <div class="section-title">🗓 逐日行程</div>
+
+  <!-- ══ D1 ══ -->
+  <div class="day-card" id="d1">
+    <div class="day-header" onclick="toggle('d1')">
+      <span class="day-badge d1">Day 1</span>
+      <span class="day-title">✈️ 落地！先遣部隊拓荒北谷</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <!-- 手繪插圖 -->
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- 飛機手繪 -->
+          <g transform="translate(8,10)">
+            <path d="M2 18 L28 8 L42 12 L36 18 Z" fill="#87CEEB" stroke="#2B9EB3" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M20 12 L26 4 L32 6 L26 14Z" fill="#B8E4F5" stroke="#2B9EB3" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M6 18 L10 22 L16 20 L14 16Z" fill="#B8E4F5" stroke="#2B9EB3" stroke-width="1" stroke-linejoin="round"/>
+            <circle cx="36" cy="13" r="1.5" fill="#FFD166"/>
+          </g>
+          <!-- 雲 -->
+          <g transform="translate(40,6)" opacity="0.7">
+            <ellipse cx="8" cy="8" rx="8" ry="5" fill="white" stroke="#C8DDE4" stroke-width="1"/>
+            <ellipse cx="14" cy="9" rx="7" ry="4" fill="white" stroke="#C8DDE4" stroke-width="1"/>
+            <ellipse cx="3" cy="10" rx="5" ry="3.5" fill="white" stroke="#C8DDE4" stroke-width="1"/>
+          </g>
+          <!-- 地面 -->
+          <path d="M0 42 Q18 38 36 42 Q54 46 72 42 L72 52 L0 52Z" fill="#E8F6FF"/>
+          <path d="M0 46 Q18 42 36 46 Q54 50 72 46 L72 52 L0 52Z" fill="#D0EEFF"/>
+        </svg>
+        <div class="day-illus-caption">抵達那霸後直奔 OTS 取車，<br>領完行李約 14:00，取車完約 15:30 出發！</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot travel">🚐</div>
+          <div class="tl-content">
+            <div class="tl-time">06:00</div>
+            <div class="tl-main">全鋒接送 出發前往機場</div>
+            <div class="tl-sub">預約編號 D3747963・驗證碼 5021。司機到府接送，約 1.5–2 小時抵達機場</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">✈️</div>
+          <div class="tl-content">
+            <div class="tl-time">10:05</div>
+            <div class="tl-main">台灣起飛</div>
+            <div class="tl-sub">飛行約 1.5 小時</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">🛬</div>
+          <div class="tl-content">
+            <div class="tl-time">12:40</div>
+            <div class="tl-main">抵達那霸空港</div>
+            <div class="tl-sub">入境 + 等待行李。雙胞胎推車×2、大行李，出關約 14:00</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">🚗</div>
+          <div class="tl-content">
+            <div class="tl-time">14:00–15:30</div>
+            <div class="tl-main">OTS 租車取車</div>
+            <div class="tl-sub">接駁巴士 → OTS 臨空豊崎 → 辦手續裝載行李推車。約需 1.5 小時，抓 15:30 出發</div>
+            <div class="tl-mapcode"><span class="mapcode">232 543 400*25</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">🛣</div>
+          <div class="tl-content">
+            <div class="tl-time">15:30 出發</div>
+            <div class="tl-main">北上北谷（約 40 分）</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot sleep">🏨</div>
+          <div class="tl-content">
+            <div class="tl-time">16:10–16:30</div>
+            <div class="tl-main" onclick="openModal('hotel')" style="cursor:pointer;color:var(--ocean-dark);text-decoration:underline dashed;text-underline-offset:3px">Check-in 麗嘉皇家度假酒店 ↗</div>
+            <div class="tl-sub">40㎡大房、廚房、洗烘衣機、大浴池。先安頓雙寶</div>
+            <div class="tl-mapcode"><span class="mapcode">33 525 209*88</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot shop">🛒</div>
+          <div class="tl-content">
+            <div class="tl-time">17:00</div>
+            <div class="tl-main">AEON 北谷拓荒採購</div>
+            <div class="tl-sub">飲用水、尿布補給、早餐備糧、應急泡麵。24小時無壓力</div>
+            <div class="tl-mapcode"><span class="mapcode">33 525 175*48</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">🤝</div>
+          <div class="tl-content">
+            <div class="tl-time">19:30–20:00</div>
+            <div class="tl-main">渼家到達！兩軍會師 🎉</div>
+            <div class="tl-sub">渼家 17:20 落地，機場覓食後北上抵達</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍽 晚餐選擇</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">琉球之牛 北谷店</div>
+            <div class="food-chip-desc">Google 4.6分｜美國村旁燒肉，多人聚餐首選。熱門需預約</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">Gourmet 迴轉壽司市場</div>
+            <div class="food-chip-desc">美國村店｜食材新鮮，在地人也常去，孩子好入口</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">彩食酒宴 美浜店</div>
+            <div class="food-chip-desc">居酒屋｜沖繩料理CP值高，刺身拼盤、烤串、烤魚都推</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍦 飯後甜點</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">Blue Seal 冰淇淋</div>
+            <div class="food-chip-desc">美國村店｜沖繩必吃！紅芋、雪鹽金楚糕限定口味必點</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">豬肉蛋飯糰 北谷店</div>
+            <div class="food-chip-desc">逛完帶走當消夜｜限定塔可飯口味比機場更多，390円</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ D2 ══ -->
+  <div class="day-card" id="d2">
+    <div class="day-header" onclick="toggle('d2')">
+      <span class="day-badge d2">Day 2</span>
+      <span class="day-title">🦁 中部制霸：兒童王國 × ぼうけんの国</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- 手繪獅子 -->
+          <g transform="translate(4,4)">
+            <!-- 鬃毛 -->
+            <circle cx="20" cy="22" r="15" fill="#FFD166" opacity="0.6"/>
+            <!-- 臉 -->
+            <circle cx="20" cy="22" r="11" fill="#FFDFA0" stroke="#FFB830" stroke-width="1.2"/>
+            <!-- 耳朵 -->
+            <circle cx="11" cy="13" r="4" fill="#FFDFA0" stroke="#FFB830" stroke-width="1"/>
+            <circle cx="29" cy="13" r="4" fill="#FFDFA0" stroke="#FFB830" stroke-width="1"/>
+            <!-- 眼睛 -->
+            <circle cx="15" cy="20" r="2.5" fill="white"/>
+            <circle cx="25" cy="20" r="2.5" fill="white"/>
+            <circle cx="15.5" cy="20.5" r="1.2" fill="#3D2B00"/>
+            <circle cx="25.5" cy="20.5" r="1.2" fill="#3D2B00"/>
+            <!-- 鼻子嘴巴 -->
+            <ellipse cx="20" cy="25" rx="3" ry="2" fill="#FFB3A0"/>
+            <path d="M17 27 Q20 30 23 27" stroke="#3D2B00" stroke-width="1" fill="none"/>
+            <!-- 尾巴 -->
+            <path d="M30 32 Q38 28 36 38 Q40 42 36 44" stroke="#FFB830" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="36" cy="45" rx="3" ry="2" fill="#FFD166"/>
+          </g>
+          <!-- 爪印 -->
+          <g transform="translate(48,30)" opacity="0.5">
+            <circle cx="4" cy="6" r="3" fill="#FFD166"/>
+            <circle cx="1" cy="2" r="2" fill="#FFD166"/>
+            <circle cx="4" cy="0" r="2" fill="#FFD166"/>
+            <circle cx="7" cy="2" r="2" fill="#FFD166"/>
+          </g>
+        </svg>
+        <div class="day-illus-caption">兒童王國看真獅子！<br>ぼうけんの国 全室內冷氣，<br>雨天也完全沒問題 ☔</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot play">🦒</div>
+          <div class="tl-content">
+            <div class="tl-time">09:30</div>
+            <div class="tl-main" onclick="openModal('zoo')" style="cursor:pointer;color:var(--ocean-dark);text-decoration:underline dashed;text-underline-offset:3px">沖繩兒童王國 ↗</div>
+            <div class="tl-sub">動物園＋神奇博物館。推車暢行！15歲以下免費。停留約 2 小時，11:30 前離開</div>
+            <div class="tl-mapcode"><span class="mapcode">33 561 766*72</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot food">🍱</div>
+          <div class="tl-content">
+            <div class="tl-time">12:00</div>
+            <div class="tl-main">午餐</div>
+            <div class="tl-sub">海族工房（園外）或 Welcome 飲食店（園內）。早點吃完，才有時間開車往うるま</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot play">🎣</div>
+          <div class="tl-content">
+            <div class="tl-time">13:30</div>
+            <div class="tl-main" onclick="openModal('bouken')" style="cursor:pointer;color:var(--ocean-dark);text-decoration:underline dashed;text-underline-offset:3px">ぼうけんの国（うるま市石川）↗</div>
+            <div class="tl-sub">熱帶魚釣、寶石探寶、ザリガニ釣。全室內冷氣空調！兒童王國到此約 25 分車程</div>
+            <div class="tl-mapcode"><span class="mapcode">499 301 285*55</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot food">🍜</div>
+          <div class="tl-content">
+            <div class="tl-time">18:30</div>
+            <div class="tl-main">晚餐：回北谷</div>
+            <div class="tl-sub">De-jinatonton 或琉球之牛（若D1沒去的話）</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍱 午餐選擇（擇一）</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">海族工房</div>
+            <div class="food-chip-desc">園外停車場旁｜Buffet 約30種，成人1,500円 / 3–6歲600円，超值</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">Welcome 飲食店</div>
+            <div class="food-chip-desc">園內｜沖繩麵、章魚燒、咖哩飯。不出園快速解決</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍦 點心</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">Blue Seal 冰淇淋</div>
+            <div class="food-chip-desc">Welcome 飲食店內有賣｜邊逛動物區邊吃</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍜 晚餐選擇（擇一）</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">De-jinatonton</div>
+            <div class="food-chip-desc">美國村｜龍宮城風親子居酒屋，兒童遊戲空間，炸島豆腐299円</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">琉球之牛 北谷店</div>
+            <div class="food-chip-desc">D1沒去可今晚補｜多人聚餐首選</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">北海素材迴轉壽司</div>
+            <div class="food-chip-desc">北谷｜玩了一天最省力的晚餐，孩子愛</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>⚠️ 行前必做：</strong>ぼうけんの国 建議事先網路預約，假日人潮大，現場可能無法入場
+      </div>
+      <div class="rain-badge">☂ 雨天備案：ぼうけんの国全天候室內，完全免疫</div>
+    </div>
+  </div>
+
+  <!-- ══ D3 ══ -->
+  <div class="day-card" id="d3">
+    <div class="day-header" onclick="toggle('d3')">
+      <span class="day-badge d3">Day 3</span>
+      <span class="day-title">🛍 PARCO CITY 主場日 · 全天深度作戰</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- 購物袋手繪 -->
+          <g transform="translate(10,6)">
+            <rect x="2" y="14" width="32" height="28" rx="3" fill="#EEE8FF" stroke="#6B3FA0" stroke-width="1.5"/>
+            <path d="M10 14 Q10 6 18 6 Q26 6 26 14" fill="none" stroke="#6B3FA0" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- 愛心 -->
+            <path d="M18 28 L14 23 Q12 20 15 19 Q17 18 18 21 Q19 18 21 19 Q24 20 22 23Z" fill="#FF7B7B" opacity="0.8"/>
+          </g>
+          <!-- 星星 -->
+          <g opacity="0.6">
+            <text x="52" y="16" font-size="10" fill="#FFD166">✦</text>
+            <text x="58" y="28" font-size="7" fill="#B8A0E0">✦</text>
+            <text x="4" y="44" font-size="8" fill="#FFD166">✦</text>
+          </g>
+          <!-- 海景線條暗示 -->
+          <path d="M0 46 Q18 42 36 46 Q54 50 72 46" stroke="#87CEEB" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M0 50 Q18 46 36 50 Q54 54 72 50" stroke="#87CEEB" stroke-width="1" fill="none" opacity="0.3"/>
+        </svg>
+        <div class="day-illus-caption">從早逛到夕陽！<br>孩子進 namco 放電，<br>大人繼續血拚 💜</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot shop">🏬</div>
+          <div class="tl-content">
+            <div class="tl-time">10:00</div>
+            <div class="tl-main" onclick="openModal('parco')" style="cursor:pointer;color:var(--ocean-dark);text-decoration:underline dashed;text-underline-offset:3px">PARCO CITY 開館即到 ↗</div>
+            <div class="tl-sub">藥妝、童裝（阿卡將 / BABYDOLL）、UNIQLO 掃貨。趁人少先衝</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot food">🍣</div>
+          <div class="tl-content">
+            <div class="tl-time">12:30</div>
+            <div class="tl-main">午餐</div>
+            <div class="tl-sub">3F 三浦三崎港（迴轉壽司）或 1F 涮涮鍋美山</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot play">🎮</div>
+          <div class="tl-content">
+            <div class="tl-time">14:00</div>
+            <div class="tl-main">3F namco 兒童遊樂設施</div>
+            <div class="tl-sub">孩子放電，大人繼續逛生活雜貨。分兵，兩邊都贏！</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot play">🌅</div>
+          <div class="tl-content">
+            <div class="tl-time">17:00</div>
+            <div class="tl-main">3F 展望台海景露台看夕陽</div>
+            <div class="tl-sub">5月日落約 19:00，時間充裕。喝杯飲料，看海，什麼都不做</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot food">🥩</div>
+          <div class="tl-content">
+            <div class="tl-time">18:30</div>
+            <div class="tl-main">晚餐</div>
+            <div class="tl-sub">極味屋漢堡排（2F）、A&W 或 Steak 88</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍣 午餐選擇（擇一）</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">三浦三崎港（3F）</div>
+            <div class="food-chip-desc">迴轉壽司｜在地人推薦，新鮮平價，靠窗海景座位超讚</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">涮涮鍋美山（1F）</div>
+            <div class="food-chip-desc">吃到飽｜海景落地窗，3歲以下免費，10歲以下半價</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">☕ 下午茶 / 看夕陽時</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">PARCO 3F 露台飲料</div>
+            <div class="food-chip-desc">展望台旁｜看夕陽配飲料，5月日落約19:00</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">PARCO 2F 美食廣場</div>
+            <div class="food-chip-desc">手搖飲 / 甜點｜逛街中途補血，選擇多元</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🥩 晚餐選擇（擇一）</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">極味屋漢堡排（2F）</div>
+            <div class="food-chip-desc">九州黑毛和牛伊萬里牛｜鐵板現做，孩子圍觀師傅超興奮</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">A&W（2F 美食廣場）</div>
+            <div class="food-chip-desc">美式漢堡｜沖繩限定 Root Beer！孩子最愛</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">Steak 88（2F）</div>
+            <div class="food-chip-desc">石垣牛牛排｜CP值高，美食廣場輕鬆吃</div>
+          </div>
+        </div>
+      </div>
+      <div class="rain-badge">☂ 雨天備案：PARCO 全日室內，本身就是最強雨天備案</div>
+    </div>
+  </div>
+
+  <!-- ══ D4 ══ -->
+  <div class="day-card" id="d4">
+    <div class="day-header" onclick="toggle('d4')">
+      <span class="day-badge d4">Day 4</span>
+      <span class="day-title">🐧 南部收尾：DMM水族館 × 那霸國際通</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- 手繪企鵝 -->
+          <g transform="translate(6,2)">
+            <ellipse cx="16" cy="28" rx="12" ry="16" fill="#2C3E50"/>
+            <ellipse cx="16" cy="28" rx="7" ry="11" fill="white"/>
+            <circle cx="16" cy="10" r="9" fill="#2C3E50"/>
+            <ellipse cx="16" cy="10" rx="5" ry="5.5" fill="white"/>
+            <circle cx="13" cy="9" r="2" fill="white"/>
+            <circle cx="19" cy="9" r="2" fill="white"/>
+            <circle cx="13.5" cy="9" r="1" fill="#2C3E50"/>
+            <circle cx="19.5" cy="9" r="1" fill="#2C3E50"/>
+            <path d="M13 13 Q16 15 19 13" fill="#FFD166" stroke="#FFB830" stroke-width="0.5"/>
+            <ellipse cx="9" cy="27" rx="4" ry="8" fill="#2C3E50" transform="rotate(-15,9,27)"/>
+            <ellipse cx="23" cy="27" rx="4" ry="8" fill="#2C3E50" transform="rotate(15,23,27)"/>
+            <ellipse cx="12" cy="41" rx="4" ry="2.5" fill="#FFD166"/>
+            <ellipse cx="20" cy="41" rx="4" ry="2.5" fill="#FFD166"/>
+          </g>
+          <!-- 氣泡 -->
+          <g opacity="0.5">
+            <circle cx="50" cy="12" r="3" fill="none" stroke="#87CEEB" stroke-width="1.2"/>
+            <circle cx="58" cy="20" r="2" fill="none" stroke="#87CEEB" stroke-width="1"/>
+            <circle cx="54" cy="6" r="1.5" fill="none" stroke="#87CEEB" stroke-width="1"/>
+          </g>
+          <!-- 海浪底部 -->
+          <path d="M0 46 Q18 42 36 46 Q54 50 72 46 L72 52 L0 52Z" fill="#E8F6FF"/>
+        </svg>
+        <div class="day-illus-caption">DMM 企鵝超近！<br>下午殺進國際通，<br>最後一輪藥妝大掃貨 🧧</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot play">🐠</div>
+          <div class="tl-content">
+            <div class="tl-time">09:00</div>
+            <div class="tl-main" onclick="openModal('dmm')" style="cursor:pointer;color:var(--ocean-dark);text-decoration:underline dashed;text-underline-offset:3px">DMM Kariyushi 水族館（iias 豐崎）↗</div>
+            <div class="tl-sub">迷你豬、企鵝、樹懶近距離互動！2025年全新 tetote 動物廣場。建議事先網購票</div>
+            <div class="tl-mapcode"><span class="mapcode">232 543 400*25</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot food">🥩</div>
+          <div class="tl-content">
+            <div class="tl-time">12:00</div>
+            <div class="tl-main">午餐：iias 豐崎</div>
+            <div class="tl-sub">OK STEAK × HAMBURG 或 iias 超市熟食區</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">🚗</div>
+          <div class="tl-content">
+            <div class="tl-time">13:00</div>
+            <div class="tl-main">南部 → 那霸 移動（約 25–30 分）</div>
+            <div class="tl-sub">iias 豐崎到國際通約 25 分。雙寶午睡時間，路上補個覺</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot shop">🧧</div>
+          <div class="tl-content">
+            <div class="tl-time">13:30</div>
+            <div class="tl-main">國際通掃街</div>
+            <div class="tl-sub">唐吉軻德、藥妝最終補貨、Blue Seal 冰淇淋收尾。停車建議用 Dパーキング 牧志</div>
+            <div class="tl-mapcode"><span class="mapcode">33 157 444*60</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot food">🏮</div>
+          <div class="tl-content">
+            <div class="tl-time">18:30</div>
+            <div class="tl-main">晚餐：國際通</div>
+            <div class="tl-sub">屋台村（多人聚餐各選各）或 燒肉本部牧場 或 KOBAKO 沖繩料理</div>
+            <div class="tl-mapcode"><span class="mapcode">33 157 444*60</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🥩 午餐選擇（擇一）</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">OK STEAK × HAMBURG</div>
+            <div class="food-chip-desc">iias 豐崎 2F｜鐵板自調熟度，附沙拉湯飯，親民CP值高</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">iias 超市熟食區</div>
+            <div class="food-chip-desc">平價快速備案｜飯糰、糰子、布丁，品質不踩雷</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">☕ 國際通下午補血</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">Ball Donut Park</div>
+            <div class="food-chip-desc">國際通｜球型甜甜圈文青風，邊走邊吃最方便</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">Blue Seal 冰淇淋</div>
+            <div class="food-chip-desc">國際通店｜逛累了來一球，紅芋、雪鹽金楚糕</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🏮 晚餐選擇（擇一）</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">國際通屋台村</div>
+            <div class="food-chip-desc">20間屋台｜串燒+沖繩料理，紅燈籠夜市感，各選各的完美</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">燒肉本部牧場</div>
+            <div class="food-chip-desc">國際通店｜農林水産大臣賞得獎本部牛，熱門需提前預約</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">KOBAKO 沖繩料理</div>
+            <div class="food-chip-desc">國際通旁｜島野菜＋阿古豬＋山城牛，正宗在地沖繩味</div>
+          </div>
+        </div>
+      </div>
+      <div class="food-section">
+        <div class="food-title">🍙 消夜帶走</div>
+        <div class="food-grid">
+          <div class="food-chip star">
+            <span class="food-star">⭐</span>
+            <div class="food-chip-name">豬肉蛋飯糰 ポーたま</div>
+            <div class="food-chip-desc">牧志市場店｜390円，限定口味比機場更多，孩子愛吃</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">Ball Donut Park</div>
+            <div class="food-chip-desc">國際通｜球型甜甜圈，文青風，口味豐富</div>
+          </div>
+          <div class="food-chip">
+            <div class="food-chip-name">Blue Seal 冰淇淋</div>
+            <div class="food-chip-desc">國際通店｜最後一晚再吃一球！紅芋、雪鹽金楚糕</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert-box">
+        <strong>⚠️ 注意：</strong>DMM 餵食體驗（企鵝 / 樹懶）限額，入館前先確認當天時段並登記
+      </div>
+      <div class="rain-badge">☂ 雨天備案：DMM + iias 全日室內，完全免疫雨天</div>
+    </div>
+  </div>
+
+  <!-- ══ D5 ══ -->
+  <div class="day-card" id="d5">
+    <div class="day-header" onclick="toggle('d5')">
+      <span class="day-badge d5">Day 5</span>
+      <span class="day-title">✈️ 共同撤退！瀨長島足湯 → 還車 → 飛台灣</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- 行李箱手繪 -->
+          <g transform="translate(6,4)">
+            <rect x="4" y="10" width="28" height="32" rx="4" fill="#FFD166" stroke="#C8A000" stroke-width="1.5"/>
+            <rect x="12" y="6" width="12" height="6" rx="2" fill="none" stroke="#C8A000" stroke-width="1.5"/>
+            <line x1="4" y1="26" x2="32" y2="26" stroke="#C8A000" stroke-width="1.2"/>
+            <rect x="14" y="20" width="8" height="10" rx="2" fill="white" stroke="#C8A000" stroke-width="1"/>
+            <circle cx="6" cy="42" r="2.5" fill="#A08000"/>
+            <circle cx="30" cy="42" r="2.5" fill="#A08000"/>
+          </g>
+          <!-- 花朵 -->
+          <g transform="translate(46,8)" opacity="0.8">
+            <circle cx="8" cy="8" r="3.5" fill="#FF7B7B"/>
+            <circle cx="8" cy="2" r="2" fill="#FFB3C6"/>
+            <circle cx="8" cy="14" r="2" fill="#FFB3C6"/>
+            <circle cx="2" cy="8" r="2" fill="#FFB3C6"/>
+            <circle cx="14" cy="8" r="2" fill="#FFB3C6"/>
+            <circle cx="3.5" cy="3.5" r="1.5" fill="#FFB3C6"/>
+            <circle cx="12.5" cy="3.5" r="1.5" fill="#FFB3C6"/>
+          </g>
+          <!-- 小星星 -->
+          <text x="50" y="38" font-size="12" fill="#FFD166" opacity="0.8">✦</text>
+          <text x="60" y="22" font-size="8" fill="#87CEEB" opacity="0.7">✦</text>
+        </svg>
+        <div class="day-illus-caption">最後早晨收拾打包，<br>瀨長島足湯畫完美句點，<br>帶著回憶飛回家 🌺</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot food">🍳</div>
+          <div class="tl-content">
+            <div class="tl-time">07:30</div>
+            <div class="tl-main">飯店早餐 慢慢吃</div>
+            <div class="tl-sub">最後一頓海景早餐，不趕時間，享用到 08:30</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot sleep">📦</div>
+          <div class="tl-content">
+            <div class="tl-time">09:00 打包</div>
+            <div class="tl-main">退房 10:30｜行李裝車出發</div>
+            <div class="tl-sub">慢慢收，推車×2 裝車。check-out 最晚 11:00，悠哉出發不趕人</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot play">🌊</div>
+          <div class="tl-content">
+            <div class="tl-time">11:00</div>
+            <div class="tl-main" onclick="openModal('senaga')" style="cursor:pointer;color:var(--ocean-dark);text-decoration:underline dashed;text-underline-offset:3px">瀨長島 Umikaji Terrace・足湯散步 ↗</div>
+            <div class="tl-sub">走走看看就好，45 分鐘輕鬆逛。足湯泡腳，買塔可飯帶上飛機，約 11:45 離開</div>
+            <div class="tl-mapcode"><span class="mapcode">33 002 470*30</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel">🚗</div>
+          <div class="tl-content">
+            <div class="tl-time">12:00</div>
+            <div class="tl-main">OTS 臨空豊崎還車</div>
+            <div class="tl-sub">⛽ 建議出發前在北谷或宜野湾加油，避開 OTS 旁直營加油站（油價偏高）。還車手續約 30 分，送迎巴士 20 分→ 機場</div>
+            <div class="tl-mapcode"><span class="mapcode">232 543 400*25</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot alert">⚠️</div>
+          <div class="tl-content">
+            <div class="tl-time">12:50</div>
+            <div class="tl-main">那霸機場抵達・開始 Check-in</div>
+            <div class="tl-sub">送迎巴士約 20 分。兩家 6 人＋推車辦登機手續抓 40 分，13:30 前完成。距截止 15:00 還有充裕時間 🙏</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot alert">🚨</div>
+          <div class="tl-content">
+            <div class="tl-time">15:00 — 硬性截止</div>
+            <div class="tl-main">完成安全檢查・候機</div>
+            <div class="tl-sub">Check-in 截止 15:00，提早完成就去免稅店逛逛，買機場限定伴手禮！</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot travel">✈️</div>
+          <div class="tl-content">
+            <div class="tl-time">18:20</div>
+            <div class="tl-main">兩家共同班機飛台灣！</div>
+            <div class="tl-sub">帶著滿滿回憶 🌺</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<!-- ── SECTION: 航班 & 預約 ── -->
+<div id="sec-booking" class="page-section">
+<div class="main">
+
+  <div class="section-title" style="margin-top:20px">✈️ 航班資訊</div>
+  <div class="flight-wrap">
+
+    <!-- 去程 -->
+    <div class="boarding-card">
+      <div class="bc-header">
+        <div>
+          <div class="bc-airline">JTA 日本トランスオーシャン航空</div>
+          <div class="bc-flight">NU 302</div>
+          <div class="bc-dir">去程｜台灣 → 沖繩</div>
+        </div>
+        <div class="bc-badge">2026<br>出發日</div>
+      </div>
+      <div class="bc-route">
+        <div class="bc-city">
+          <div class="bc-city-code">TPE</div>
+          <div class="bc-city-name">台灣桃園</div>
+          <div class="bc-time">10:05</div>
+        </div>
+        <div class="bc-arrow">
+          <div class="bc-arrow-line"></div>
+          <div class="bc-duration">約 1h 35m</div>
+        </div>
+        <div class="bc-city right">
+          <div class="bc-city-code">OKA</div>
+          <div class="bc-city-name">那霸空港</div>
+          <div class="bc-time">12:40</div>
+        </div>
+      </div>
+      <div class="bc-footer">
+        <div class="bc-info-item">
+          <div class="bc-info-label">航班</div>
+          <div class="bc-info-val">NU302</div>
+        </div>
+        <div class="bc-info-item">
+          <div class="bc-info-label">訂位代碼</div>
+          <div class="bc-info-val code">ELSHNM</div>
+        </div>
+        <div class="bc-info-item">
+          <div class="bc-info-label">航空公司</div>
+          <div class="bc-info-val">JTA</div>
+        </div>
+      </div>
+      <a href="https://www.jal.co.jp/tw/zh/inter/checkin/" target="_blank" class="bc-checkin-btn">🌐 前往 JTA 線上 Check-in</a>
+    </div>
+
+    <!-- 回程 -->
+    <div class="boarding-card">
+      <div class="bc-header" style="background: linear-gradient(135deg, #6B3FA0, #4A2A7A)">
+        <div>
+          <div class="bc-airline">Thai VietJet Air 泰越捷航空</div>
+          <div class="bc-flight">VZ 569</div>
+          <div class="bc-dir">回程｜沖繩 → 台灣</div>
+        </div>
+        <div class="bc-badge">D5 回家</div>
+      </div>
+      <div class="bc-route">
+        <div class="bc-city">
+          <div class="bc-city-code">OKA</div>
+          <div class="bc-city-name">那霸空港</div>
+          <div class="bc-time">18:20</div>
+        </div>
+        <div class="bc-arrow">
+          <div class="bc-arrow-line" style="background:linear-gradient(90deg,#D8C0FF,#6B3FA0,#D8C0FF)"></div>
+          <div class="bc-duration">約 1h 35m</div>
+        </div>
+        <div class="bc-city right">
+          <div class="bc-city-code">TPE</div>
+          <div class="bc-city-name">台灣桃園</div>
+          <div class="bc-time">18:55</div>
+        </div>
+      </div>
+      <div class="bc-footer">
+        <div class="bc-info-item">
+          <div class="bc-info-label">航班</div>
+          <div class="bc-info-val">VZ569</div>
+        </div>
+        <div class="bc-info-item">
+          <div class="bc-info-label">訂位代碼</div>
+          <div class="bc-info-val code">AEE2V9</div>
+        </div>
+        <div class="bc-info-item">
+          <div class="bc-info-label">check-in 截止</div>
+          <div class="bc-info-val">15:00</div>
+        </div>
+      </div>
+      <a href="https://www.vietjetair.com/tw" target="_blank" class="bc-checkin-btn" style="background:#E8D8FF;color:#4A2A7A">🌐 前往 VietJet 線上 Check-in</a>
+    </div>
+
+  </div><!-- /flight-wrap -->
+
+  <div class="section-title">🗂 預約夾</div>
+  <div class="wallet-grid">
+
+    <!-- 麗嘉 主房 -->
+    <div class="booking-card" id="bk-hotel1">
+      <div class="bk-header" onclick="toggleBk('bk-hotel1')">
+        <div class="bk-icon hotel">🏨</div>
+        <div>
+          <div class="bk-title">麗嘉皇家度假酒店｜羽家主房</div>
+          <div class="bk-sub">北谷 · 5/XX 入住 · 4晚</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">訂單編號</div>
+            <div class="bk-detail-val highlight">20260515-1438</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">入住 Check-in</div>
+            <div class="bk-detail-val">15:00</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">退房 Check-out</div>
+            <div class="bk-detail-val">11:00</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">房型</div>
+            <div class="bk-detail-val">40㎡ 廚房套房</div>
+          </div>
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">地址</div>
+            <div class="bk-detail-val">沖縄県中頭郡北谷町美浜15-69</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.3198,127.7574" target="_blank" class="bk-btn maps">📍 Google Maps</a>
+          <a href="https://www.rihga.co.jp/okinawa-chatan" target="_blank" class="bk-btn secondary">🌐 官網</a>
+          <a href="tel:+81988589090" class="bk-btn primary">📞 飯店電話</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 麗嘉 渼家房 -->
+    <div class="booking-card" id="bk-hotel2">
+      <div class="bk-header" onclick="toggleBk('bk-hotel2')">
+        <div class="bk-icon hotel2">🏠</div>
+        <div>
+          <div class="bk-title">麗嘉皇家度假酒店｜渼家房</div>
+          <div class="bk-sub">北谷 · 5/XX 入住 · 4晚</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">訂單編號</div>
+            <div class="bk-detail-val highlight">20260515-1309</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">入住 Check-in</div>
+            <div class="bk-detail-val">15:00</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">退房 Check-out</div>
+            <div class="bk-detail-val">11:00</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">房型</div>
+            <div class="bk-detail-val">同棟</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.3198,127.7574" target="_blank" class="bk-btn maps">📍 Google Maps</a>
+          <a href="tel:+81988589090" class="bk-btn primary">📞 飯店電話</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 全鋒機場接送 -->
+    <div class="booking-card" id="bk-transfer">
+      <div class="bk-header" onclick="toggleBk('bk-transfer')">
+        <div class="bk-icon car" style="background:#E8F0FF">🚐</div>
+        <div>
+          <div class="bk-title">全鋒機場接送</div>
+          <div class="bk-sub">出發 5/15 送機 ＋ 返台 5/19 接機</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">🛫 送機（5/15 出發）</div>
+            <div class="bk-detail-val highlight">D3747963</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">驗證碼</div>
+            <div class="bk-detail-val">5021</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">服務資訊</div>
+            <div class="bk-detail-val"><a href="https://www.tms.tw/61CA15" target="_blank" style="color:var(--ocean-dark)">查閱連結 ↗</a></div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">🛬 接機（5/19 返台）</div>
+            <div class="bk-detail-val highlight">D3730582</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">驗證碼</div>
+            <div class="bk-detail-val">8707</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">服務資訊</div>
+            <div class="bk-detail-val"><a href="https://www.tms.tw/04D085" target="_blank" style="color:var(--ocean-dark)">查閱連結 ↗</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTS 租車 -->
+    <div class="booking-card" id="bk-car">
+      <div class="bk-header" onclick="toggleBk('bk-car')">
+        <div class="bk-icon car">🚗</div>
+        <div>
+          <div class="bk-title">OTS 租車｜臨空豊崎營業所</div>
+          <div class="bk-sub">Toyota Sienta · 兒童座椅×2</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">預約單號</div>
+            <div class="bk-detail-val highlight">OTS1428451</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">車型</div>
+            <div class="bk-detail-val">Toyota Sienta</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">兒童座椅</div>
+            <div class="bk-detail-val">×2（3歲雙寶）</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">營業所電話</div>
+            <div class="bk-detail-val">098-856-8877</div>
+          </div>
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">送迎巴士乘車處</div>
+            <div class="bk-detail-val">那霸空港 ④號出口 橫斷步道後 10-A 號站牌</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.1588,127.6546" target="_blank" class="bk-btn maps">📍 OTS 位置</a>
+          <a href="https://www.otsinternational.jp/otsrentacar/okinawa/office/toyosaki/" target="_blank" class="bk-btn secondary">🌐 官網</a>
+          <a href="tel:+810988568877" class="bk-btn primary">📞 緊急電話</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DMM 水族館 -->
+    <div class="booking-card" id="bk-dmm">
+      <div class="bk-header" onclick="toggleBk('bk-dmm')">
+        <div class="bk-icon ticket">🎟</div>
+        <div>
+          <div class="bk-title">DMM Kariyushi 水族館</div>
+          <div class="bk-sub">iias 豐崎 · 建議網路購票</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">MAPCODE</div>
+            <div class="bk-detail-val highlight">232 543 400*25</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">營業時間</div>
+            <div class="bk-detail-val">09:00–20:00</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">成人票</div>
+            <div class="bk-detail-val">約 2,400円</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">3歲以下</div>
+            <div class="bk-detail-val">免費</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.1563,127.6508" target="_blank" class="bk-btn maps">📍 Google Maps</a>
+          <a href="https://kariyushi-aquarium.com/" target="_blank" class="bk-btn secondary">🌐 官網</a>
+          <a href="https://www.klook.com/zh-TW/activity/16009-dmm-kariyushi-aquarium-okinawa/" target="_blank" class="bk-btn primary">🎟 Klook 購票</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ぼうけんの国 -->
+    <div class="booking-card" id="bk-bouken">
+      <div class="bk-header" onclick="toggleBk('bk-bouken')">
+        <div class="bk-icon ticket" style="background:#FFF0D0">🎣</div>
+        <div>
+          <div class="bk-title">ぼうけんの国（うるま市石川）</div>
+          <div class="bk-sub">建議事先網路預約</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">MAPCODE</div>
+            <div class="bk-detail-val highlight">499 301 285*55</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">營業時間</div>
+            <div class="bk-detail-val">10:00–18:00</div>
+          </div>
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">地址</div>
+            <div class="bk-detail-val">沖縄県うるま市石川3355-1 うるま農場内</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.4398,127.8293" target="_blank" class="bk-btn maps">📍 Google Maps</a>
+          <a href="https://boukennokuni.com/okinawa/" target="_blank" class="bk-btn secondary">🌐 官網</a>
+          <a href="https://boukennokuni.com/okinawa/" target="_blank" class="bk-btn primary">📅 線上預約</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARCO CITY -->
+    <div class="booking-card" id="bk-parco">
+      <div class="bk-header" onclick="toggleBk('bk-parco')">
+        <div class="bk-icon" style="background:#EEE8FF">🛍</div>
+        <div>
+          <div class="bk-title">PARCO CITY（浦添西海岸）</div>
+          <div class="bk-sub">Day 3 主場 · 10:00–22:00</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">MAPCODE</div>
+            <div class="bk-detail-val highlight">33 308 868*53</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">營業時間</div>
+            <div class="bk-detail-val">10:00–22:00</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">停車</div>
+            <div class="bk-detail-val">免費（3小時）</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">哺乳室</div>
+            <div class="bk-detail-val">有</div>
+          </div>
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">地址</div>
+            <div class="bk-detail-val">沖縄県浦添市西洲3-1</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.2631,127.7211" target="_blank" class="bk-btn maps">📍 Google Maps</a>
+          <a href="https://www.parcocity.jp/" target="_blank" class="bk-btn secondary">🌐 官網</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTS 還車提醒 -->
+    <div class="booking-card" id="bk-ots-return">
+      <div class="bk-header" onclick="toggleBk('bk-ots-return')">
+        <div class="bk-icon" style="background:#E8F8EF">↩️</div>
+        <div>
+          <div class="bk-title">OTS 還車提醒｜D5 臨空豊崎</div>
+          <div class="bk-sub">D5 11:30 還車 · 加油後交車</div>
+        </div>
+        <span class="bk-toggle">▾</span>
+      </div>
+      <div class="bk-body">
+        <div class="bk-detail-grid">
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">MAPCODE</div>
+            <div class="bk-detail-val highlight">232 543 400*25</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">預計還車時間</div>
+            <div class="bk-detail-val">11:30</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">加油站</div>
+            <div class="bk-detail-val">OTS 隔壁</div>
+          </div>
+          <div class="bk-detail-item">
+            <div class="bk-detail-label">送迎巴士→機場</div>
+            <div class="bk-detail-val">約 20 分</div>
+          </div>
+          <div class="bk-detail-item bk-detail-full">
+            <div class="bk-detail-label">流程</div>
+            <div class="bk-detail-val" style="font-size:12px">瀨長島 → OTS 加油（隔壁）→ 還車手續 → 送迎巴士 → 機場 check-in</div>
+          </div>
+        </div>
+        <div class="bk-separator"></div>
+        <div class="bk-action-row">
+          <a href="https://maps.google.com/?q=26.1588,127.6546" target="_blank" class="bk-btn maps">📍 OTS 位置</a>
+          <a href="tel:+810988568877" class="bk-btn primary">📞 OTS 緊急</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /wallet-grid -->
+</div>
+</div><!-- /sec-booking -->
+
+<!-- ── SECTION: 緊急資訊 ── -->
+<div id="sec-emergency" class="page-section">
+<div class="main">
+
+  <div class="sos-banner" style="margin-top:20px">
+    <div class="sos-icon">🆘</div>
+    <div>
+      <div class="sos-title">緊急狀況快速查閱</div>
+      <div class="sos-sub">沖繩急救：119｜警察：110｜海難：118</div>
+    </div>
+  </div>
+
+  <div class="section-title">📞 重要電話</div>
+
+  <div class="emergency-card" id="ec-official">
+    <div class="ec-header" onclick="toggleEc('ec-official')">
+      <span class="ec-icon">🏛</span>
+      <span class="ec-title">官方緊急電話</span>
+      <span class="ec-toggle">▾</span>
+    </div>
+    <div class="ec-body">
+      <div class="call-item">
+        <div><div class="call-name">救護車</div><div class="call-sub">沖繩全島通用</div></div>
+        <a href="tel:119" class="call-btn">📞 119</a>
+      </div>
+      <div class="call-item">
+        <div><div class="call-name">警察</div><div class="call-sub">報案、交通事故</div></div>
+        <a href="tel:110" class="call-btn">📞 110</a>
+      </div>
+      <div class="call-item">
+        <div><div class="call-name">海上保安廳</div><div class="call-sub">水上急難</div></div>
+        <a href="tel:118" class="call-btn">📞 118</a>
+      </div>
+      <div class="call-item">
+        <div><div class="call-name">旅遊外語協助</div><div class="call-sub">日本旅遊廳 中文熱線</div></div>
+        <a href="tel:050-3816-2787" class="call-btn">📞 撥打</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="emergency-card" id="ec-hotel">
+    <div class="ec-header" onclick="toggleEc('ec-hotel')">
+      <span class="ec-icon">🏨</span>
+      <span class="ec-title">住宿 & 租車聯絡</span>
+      <span class="ec-toggle">▾</span>
+    </div>
+    <div class="ec-body">
+      <div class="call-item">
+        <div><div class="call-name">麗嘉皇家度假酒店 北谷</div><div class="call-sub">Front Desk 24小時</div></div>
+        <a href="tel:+81988589090" class="call-btn">📞 撥打</a>
+      </div>
+      <div class="call-item">
+        <div><div class="call-name">OTS 租車 臨空豊崎</div><div class="call-sub">08:00–19:00</div></div>
+        <a href="tel:+810988568877" class="call-btn">📞 撥打</a>
+      </div>
+      <div class="call-item">
+        <div><div class="call-name">OTS 全國預約中心</div><div class="call-sub">0120-34-3732</div></div>
+        <a href="tel:012034373" class="call-btn">📞 撥打</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="emergency-card" id="ec-ots-insurance">
+    <div class="ec-header" onclick="toggleEc('ec-ots-insurance')">
+      <span class="ec-icon">🛡</span>
+      <span class="ec-title">OTS 尊爵安心險・事故 / 緊急聯絡</span>
+      <span class="ec-toggle">▾</span>
+    </div>
+    <div class="ec-body">
+      <div class="call-item" style="flex-wrap:wrap;gap:6px">
+        <div style="flex:1;min-width:160px">
+          <div class="call-name">🚗 車輛事故</div>
+          <div class="call-sub">沖縄ツーリスト（租車部）</div>
+          <div class="call-sub">098-856-8877・08:00–19:00</div>
+        </div>
+        <a href="tel:+810988568877" class="call-btn">📞 撥打</a>
+      </div>
+      <div class="call-item" style="flex-wrap:wrap;gap:6px">
+        <div style="flex:1;min-width:160px">
+          <div class="call-name">🏥 突發疾病 / 受傷（國內電話）</div>
+          <div class="call-sub">JIT海外支援股份有限公司</div>
+          <div class="call-sub" style="color:var(--ocean-dark);font-weight:700">0120-934-237</div>
+        </div>
+        <a href="tel:0120934237" class="call-btn">📞 撥打</a>
+      </div>
+      <div class="call-item" style="flex-wrap:wrap;gap:6px">
+        <div style="flex:1;min-width:160px">
+          <div class="call-name">🌐 突發疾病 / 受傷（國際電話）</div>
+          <div class="call-sub">JIT海外支援</div>
+          <div class="call-sub" style="color:var(--ocean-dark);font-weight:700">+81-3-6893-7263</div>
+        </div>
+        <a href="tel:+81368937263" class="call-btn">📞 撥打</a>
+      </div>
+      <div style="margin-top:10px">
+        <a href="https://www.otsinternational.jp/otsrentacar/cn/guide/one-two-subscriber/" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:6px;background:var(--mint-light);border:1.5px solid var(--mint);border-radius:var(--radius-sm);padding:10px;font-size:12px;font-weight:700;color:#1A8050;text-decoration:none">
+          🔗 尊爵安心險詳細說明頁面
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="emergency-card" id="ec-hospital">
+    <div class="ec-header" onclick="toggleEc('ec-hospital')">
+      <span class="ec-icon">🏥</span>
+      <span class="ec-title">提供翻譯人員的醫院（24H）</span>
+      <span class="ec-toggle">▾</span>
+    </div>
+    <div class="ec-body">
+      <div class="call-item" style="flex-wrap:wrap;gap:6px">
+        <div style="flex:1;min-width:180px">
+          <div class="call-name">🌐 中部德洲會醫院</div>
+          <div class="call-sub">沖縄県中頭郡北中城村字比嘉801番地</div>
+          <div class="call-sub" style="color:var(--ocean-dark);font-weight:700">24H急診・提供翻譯人員</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <a href="https://maps.app.goo.gl/g4MYrnkEazryK6536" target="_blank" class="call-btn">📍 地圖</a>
+          <a href="tel:+819893533910" class="call-btn">📞 撥打</a>
+        </div>
+      </div>
+      <div class="call-item" style="flex-wrap:wrap;gap:6px">
+        <div style="flex:1;min-width:180px">
+          <div class="call-name">🌐 南部德洲會醫院</div>
+          <div class="call-sub">沖縄県島尻郡八重瀬町殿釜171-1</div>
+          <div class="call-sub" style="color:var(--ocean-dark);font-weight:700">24H急診・提供翻譯人員</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <a href="https://maps.app.goo.gl/vW68pMTTQQnvcZwp8" target="_blank" class="call-btn">📍 地圖</a>
+          <a href="tel:+819889982133" class="call-btn">📞 撥打</a>
+        </div>
+      </div>
+      <div class="call-item">
+        <div><div class="call-name">💊 スギ薬局 北谷店</div><div class="call-sub">兒童退燒藥、常備藥採購</div></div>
+        <a href="https://maps.google.com/?q=スギ薬局+北谷" target="_blank" class="call-btn">📍 地圖</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:20px">🗣 急用日文句</div>
+  <div class="emergency-card" id="ec-phrase">
+    <div class="ec-header" onclick="toggleEc('ec-phrase')">
+      <span class="ec-icon">💬</span>
+      <span class="ec-title">點開查常用急用語</span>
+      <span class="ec-toggle">▾</span>
+    </div>
+    <div class="ec-body">
+      <div class="phrase-item">
+        <div class="phrase-jp">子供が熱を出しました</div>
+        <div class="phrase-kana">こどもがねつをだしました</div>
+        <div class="phrase-zh">小孩發燒了</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">救急車を呼んでください</div>
+        <div class="phrase-kana">きゅうきゅうしゃをよんでください</div>
+        <div class="phrase-zh">請叫救護車</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">アレルギーがあります</div>
+        <div class="phrase-kana">アレルギーがあります</div>
+        <div class="phrase-zh">有過敏症狀</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">子供が迷子になりました</div>
+        <div class="phrase-kana">こどもがまいごになりました</div>
+        <div class="phrase-zh">小孩走失了</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">最寄りの病院はどこですか</div>
+        <div class="phrase-kana">もよりのびょういんはどこですか</div>
+        <div class="phrase-zh">最近的醫院在哪裡</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">交通事故が起きました</div>
+        <div class="phrase-kana">こうつうじこがおきました</div>
+        <div class="phrase-zh">發生了交通事故</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">台湾語ができる人はいますか</div>
+        <div class="phrase-kana">たいわんごができるひとはいますか</div>
+        <div class="phrase-zh">有會說台語的人嗎</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp">パスポートをなくしました</div>
+        <div class="phrase-kana">パスポートをなくしました</div>
+        <div class="phrase-zh">護照遺失了</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:20px">📋 實用資訊</div>
+  <div class="emergency-card" id="ec-tips">
+    <div class="ec-header" onclick="toggleEc('ec-tips')">
+      <span class="ec-icon">💡</span>
+      <span class="ec-title">沖繩自駕 & 帶娃注意事項</span>
+      <span class="ec-toggle">▾</span>
+    </div>
+    <div class="ec-body">
+      <div class="phrase-item">
+        <div class="phrase-jp" style="font-size:13px;color:var(--text)">🚗 靠左行駛</div>
+        <div class="phrase-zh">日本靠左，台灣靠右。第一天特別注意方向感，路口轉彎容易恍神</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp" style="font-size:13px;color:var(--text)">🅿️ 停車注意</div>
+        <div class="phrase-zh">國際通附近停車費昂貴，建議用 Times Parking 或提前查好地圖</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp" style="font-size:13px;color:var(--text)">👶 6歲以下強制安全座椅</div>
+        <div class="phrase-zh">日本法規，雙寶都需要。OTS 已預約兒童座椅×2，確認取車時有安裝</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp" style="font-size:13px;color:var(--text)">⛽ 還車前加油</div>
+        <div class="phrase-zh">OTS 旁邊就有加油站，還車前加滿（セルフ自助加油，選車牌對應油種）</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-jp" style="font-size:13px;color:var(--text)">🌡 5月氣候</div>
+        <div class="phrase-zh">沖繩5月已入梅雨初期，氣溫 22–28°C，多備薄外套和折傘</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /sec-emergency -->
+<!-- ── SECTION: 行前確認清單 ── -->
+<div id="sec-checklist" class="page-section">
+<div class="main">
+
+  <div class="section-title" style="margin-top:20px">✅ 行前確認清單</div>
+
+  <div style="background:#E8F8EF;border:1.5px solid var(--mint);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1A8050;line-height:1.7">
+    ✅ 勾選後自動儲存，下次開啟進度保留
+  </div>
+
+  <!-- 訂票 & 預訂類 -->
+  <div class="booking-card" id="cl-tickets" style="margin-bottom:10px">
+    <div class="bk-header" onclick="toggleBk('cl-tickets')" style="padding:12px 16px">
+      <div class="bk-icon ticket">🎟</div>
+      <div><div class="bk-title">門票 & 預約</div></div>
+      <span class="bk-toggle" id="cl-tickets-prog" style="font-size:11px;color:var(--ocean-dark);font-weight:700;margin-right:6px"></span>
+      <span class="bk-toggle">▾</span>
+    </div>
+    <div class="bk-body">
+      <div class="checklist" id="cl-group-tickets">
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">ぼうけんの国 事先網路預約（官網線上訂）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">DMM 水族館 網路購票（避免現場排隊）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">DMM 餵食體驗時段確認（入館前）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">琉球之牛 / 燒肉本部牧場 提前訂位</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 租車 & 住宿類 -->
+  <div class="booking-card" id="cl-stay" style="margin-bottom:10px">
+    <div class="bk-header" onclick="toggleBk('cl-stay')" style="padding:12px 16px">
+      <div class="bk-icon hotel">🏨</div>
+      <div><div class="bk-title">住宿 & 租車</div></div>
+      <span class="bk-toggle">▾</span>
+    </div>
+    <div class="bk-body">
+      <div class="checklist">
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">OTS 租車確認：Toyota Sienta ＋ 兒童座椅 ×2（3歲雙寶）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">麗嘉 Check-in 時間確認（一般 15:00）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">麗嘉 早餐方案確認（是否包含）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 出發前準備 -->
+  <div class="booking-card" id="cl-prep" style="margin-bottom:10px">
+    <div class="bk-header" onclick="toggleBk('cl-prep')" style="padding:12px 16px">
+      <div class="bk-icon car">🎒</div>
+      <div><div class="bk-title">出發前準備</div></div>
+      <span class="bk-toggle">▾</span>
+    </div>
+    <div class="bk-body">
+      <div class="checklist">
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">日本 eSIM / Wi-Fi 確認開通</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">推車電池充飽、備品收納整理</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">護照有效期確認（全員）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">兒童常備藥：退燒藥、止瀉藥、防蚊液</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">換日元（便利商店 ATM 可領，或出發前換）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">信用卡通知銀行境外消費（避免被擋）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 機場 & 當天 -->
+  <div class="booking-card" id="cl-airport" style="margin-bottom:10px">
+    <div class="bk-header" onclick="toggleBk('cl-airport')" style="padding:12px 16px">
+      <div class="bk-icon" style="background:#FFE8E8">✈️</div>
+      <div><div class="bk-title">機場 & 當天確認</div></div>
+      <span class="bk-toggle">▾</span>
+    </div>
+    <div class="bk-body">
+      <div class="checklist">
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">去程 NU302 線上 Check-in（出發前 24H 開放）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">回程 VZ569 線上 Check-in（出發前 24H 開放）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">兒童推車是否可登機門口寄放（向航空公司確認）</div>
+        </div>
+        <div class="check-item" onclick="checkToggle(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">D5 OTS 還車前加油（先去隔壁加油站再還車）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /sec-checklist -->
+
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-illus">
+    <svg width="120" height="48" viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+      <!-- 手繪沖繩風景 -->
+      <!-- 海 -->
+      <path d="M0 32 Q20 26 40 32 Q60 38 80 30 Q100 22 120 30 L120 48 L0 48Z" fill="#D0EEFF"/>
+      <!-- 棕櫚樹 L -->
+      <line x1="12" y1="48" x2="14" y2="20" stroke="#7EC850" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M14 22 Q4 14 0 18 Q6 18 10 26" fill="#7EC850"/>
+      <path d="M14 24 Q22 14 26 18 Q20 20 16 28" fill="#7EC850"/>
+      <!-- 棕櫚樹 R -->
+      <line x1="108" y1="48" x2="106" y2="20" stroke="#7EC850" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M106 22 Q96 14 92 18 Q98 18 102 26" fill="#7EC850"/>
+      <path d="M106 24 Q114 14 118 18 Q112 20 108 28" fill="#7EC850"/>
+      <!-- 太陽 -->
+      <circle cx="60" cy="14" r="8" fill="#FFD166"/>
+      <line x1="60" y1="3" x2="60" y2="0" stroke="#FFD166" stroke-width="1.5"/>
+      <line x1="71" y1="6" x2="73" y2="4" stroke="#FFD166" stroke-width="1.5"/>
+      <line x1="49" y1="6" x2="47" y2="4" stroke="#FFD166" stroke-width="1.5"/>
+      <!-- 小鳥 -->
+      <path d="M35 10 Q37 8 39 10" stroke="#2B9EB3" stroke-width="1.2" fill="none"/>
+      <path d="M75 8 Q77 6 79 8" stroke="#2B9EB3" stroke-width="1.2" fill="none"/>
+    </svg>
+  </div>
+  雙寶的第一次出國，一定會是最棒的回憶 🌺<br>
+  <span style="color: var(--ocean-dark); font-weight: 700; font-family: 'Nunito', sans-serif;">羽家加油！你們可以的 💪</span>
+</div>
+
+
+
+
+
+
+
+<!-- ══ SECTION: 必買必吃圖鑑 ══ -->
+<div id="sec-guide" class="page-section">
+<div class="main">
+  <div class="section-title" style="margin-top:20px">📸 必買必吃圖鑑</div>
+  <div class="guide-filter" id="guide-filter-bar">
+    <button class="guide-filter-btn active" onclick="filterGuide('all',this)">全部</button>
+    <button class="guide-filter-btn" onclick="filterGuide('drugstore',this)">💊 藥妝</button>
+    <button class="guide-filter-btn" onclick="filterGuide('snack',this)">🍬 零食</button>
+    <button class="guide-filter-btn" onclick="filterGuide('food',this)">🍜 美食</button>
+    <button class="guide-filter-btn" onclick="filterGuide('souvenir',this)">🎁 伴手禮</button>
+  </div>
+  <div class="guide-grid" id="guide-grid"></div>
+</div>
+</div>
+
+<!-- 圖片燈箱 -->
+<div class="img-lightbox" id="img-lightbox" onclick="closeLightbox(event)">
+  <button class="img-lightbox-close" onclick="closeLightbox()">✕</button>
+  <img class="img-lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="img-lightbox-info">
+    <div class="img-lightbox-name" id="lightbox-name"></div>
+    <div class="img-lightbox-meta" id="lightbox-meta"></div>
+  </div>
+</div>
+
+<!-- 回到頂部浮動按鈕 -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到頂部" style="position:fixed;bottom:84px;right:18px;width:44px;height:44px;border-radius:50%;background:var(--ocean);color:white;font-size:18px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(43,158,179,0.35);display:none;align-items:center;justify-content:center;z-index:998;transition:opacity 0.25s,transform 0.25s;line-height:1;">↑</button>
+<style>
+  #backToTop.visible { display:flex !important; }
+  #backToTop:hover { background:var(--ocean-dark); transform:translateY(-2px); }
+</style>
+
+<!-- ══ BOTTOM TAB BAR ══ -->
+<div class="tab-bar">
+  <button class="tab-item active" id="tab-itinerary" onclick="switchTab('itinerary')">
+    <span class="tab-icon">🗓</span>
+    <span class="tab-label">行程</span>
+  </button>
+  <button class="tab-item" id="tab-booking" onclick="switchTab('booking')">
+    <span class="tab-icon">🗂</span>
+    <span class="tab-label">航班預約</span>
+  </button>
+  <button class="tab-item" id="tab-emergency" onclick="switchTab('emergency')">
+    <span class="tab-icon">🆘</span>
+    <span class="tab-label">緊急</span>
+  </button>
+  <button class="tab-item" id="tab-checklist" onclick="switchTab('checklist')">
+    <span class="tab-icon">✅</span>
+    <span class="tab-label">行前</span>
+  </button>
+  <button class="tab-item" id="tab-guide" onclick="switchTab('guide')">
+    <span class="tab-icon">📸</span>
+    <span class="tab-label">圖鑑</span>
+  </button>
+</div>
+
+<!-- ══ MODAL OVERLAY ══ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal-sheet" id="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-emoji" id="modal-emoji">📍</span>
+      <div>
+        <div class="modal-title" id="modal-title">景點名稱</div>
+        <div class="modal-subtitle" id="modal-subtitle">副標題</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ── Tab 切換 ──
+function switchTab(name) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── Day 快速跳轉 ──
+function jumpDay(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!el.classList.contains('open')) el.classList.add('open');
+  setTimeout(() => el.scrollIntoView({behavior: 'smooth', block: 'start'}), 50);
+  // 高亮 tab
+  document.querySelectorAll('.top-tab').forEach(t => t.classList.remove('active'));
+  const map = {d1:0,d2:1,d3:2,d4:3,d5:4,'checklist-card':5};
+  const tabs = document.querySelectorAll('.top-tab');
+  if (map[id] !== undefined && tabs[map[id]]) tabs[map[id]].classList.add('active');
+}
+
+// ── 折疊卡片 ──
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function toggleCrew() {
+  document.getElementById('crew-card').classList.toggle('open');
+}
+function toggleBk(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function toggleEc(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── 打勾清單 ──
+function checkToggle(item) {
+  const box = item.querySelector('.check-box');
+  const text = item.querySelector('.check-text');
+  box.classList.toggle('checked');
+  text.classList.toggle('done');
+  saveChecklist();
+}
+function saveChecklist() {
+  const items = document.querySelectorAll('.check-item');
+  const states = Array.from(items).map(i => i.querySelector('.check-box').classList.contains('checked'));
+  try { localStorage.setItem('okinawa_羽家_checklist', JSON.stringify(states)); } catch(e) {}
+}
+function loadChecklist() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('okinawa_羽家_checklist') || '[]');
+    document.querySelectorAll('.check-item').forEach((item, i) => {
+      if (saved[i]) {
+        item.querySelector('.check-box').classList.add('checked');
+        item.querySelector('.check-text').classList.add('done');
+      }
+    });
+  } catch(e) {}
+}
+
+// ── Modal 景點資料 ──
+const SPOTS = {
+  hotel: {
+    emoji: '🏨',
+    title: '麗嘉皇家度假酒店 北谷',
+    subtitle: '沖縄県北谷町美浜15-69',
+    info: [
+      {label:'電話', val:'098-858-9090'},
+      {label:'Check-in', val:'15:00'},
+      {label:'Check-out', val:'11:00'},
+      {label:'訂單 (羽家)', val:'20260515-1438'},
+      {label:'訂單 (渼家)', val:'20260515-1309'},
+      {label:'MAPCODE', val:'33 525 209*88'},
+    ],
+    actions: [
+      {label:'📍 Google Maps', url:'https://maps.google.com/?q=26.3198,127.7574', cls:'maps-btn'},
+      {label:'🌐 麗嘉官網', url:'https://www.rihga.co.jp/okinawa-chatan', cls:'info-btn'},
+      {label:'📞 飯店電話', url:'tel:+81988589090', cls:'book-btn'},
+    ],
+    note: '推車 ×2 可在前台寄放。早到可先寄放行李再出去逛，等 15:00 辦入住。'
+  },
+  zoo: {
+    emoji: '🦁',
+    title: '沖繩兒童王國',
+    subtitle: '沖縄県沖縄市胡屋5-7-1',
+    info: [
+      {label:'MAPCODE', val:'33 561 766*72'},
+      {label:'開園時間', val:'09:30（週二休）'},
+      {label:'票價', val:'16歲以上 1,000円'},
+      {label:'15歲以下', val:'免費入場'},
+      {label:'週末夜間', val:'21:00 閉園'},
+    ],
+    actions: [
+      {label:'📍 Google Maps', url:'https://maps.google.com/?q=26.3374,127.8047', cls:'maps-btn'},
+      {label:'🌐 官網', url:'https://www.okzm.jp/', cls:'info-btn'},
+    ],
+    note: '推車可使用全區。建議帶嬰兒防蚊液。Zoo 商店有 Blue Seal 冰淇淋販售。'
+  },
+  bouken: {
+    emoji: '🎣',
+    title: 'ぼうけんの国（石川）',
+    subtitle: '沖縄県うるま市石川3355-1',
+    info: [
+      {label:'MAPCODE', val:'499 301 285*55'},
+      {label:'營業時間', val:'10:00–18:00'},
+      {label:'定休日', val:'無（不定期維修）'},
+      {label:'電話', val:'098-964-1278'},
+      {label:'停車', val:'約100台（預約優先）'},
+    ],
+    actions: [
+      {label:'📍 Google Maps', url:'https://maps.google.com/?q=26.4398,127.8293', cls:'maps-btn'},
+      {label:'🌐 官網 & 預約', url:'https://boukennokuni.com/okinawa/', cls:'book-btn'},
+    ],
+    note: '⚠️ 假日建議事先預約！駐車場台數有限，現場來可能無法入場。部分體驗會弄濕，備換洗衣物。'
+  },
+  parco: {
+    emoji: '🛍',
+    title: 'PARCO CITY（浦添）',
+    subtitle: '沖縄県浦添市西洲3-1',
+    info: [
+      {label:'MAPCODE', val:'33 308 868*53'},
+      {label:'營業時間', val:'10:00–22:00'},
+      {label:'停車', val:'免費（3小時）'},
+      {label:'哺乳室', val:'有'},
+    ],
+    actions: [
+      {label:'📍 Google Maps', url:'https://maps.google.com/?q=26.2631,127.7211', cls:'maps-btn'},
+      {label:'🌐 官網', url:'https://www.parcocity.jp/', cls:'info-btn'},
+    ],
+    note: '3F namco 兒童設施。3F 展望台海景露台可看夕陽（5月日落 19:00 左右）。推車可借。'
+  },
+  dmm: {
+    emoji: '🐧',
+    title: 'DMM Kariyushi 水族館',
+    subtitle: 'iias 沖縄豊崎 1–2F',
+    info: [
+      {label:'MAPCODE', val:'232 543 400*25'},
+      {label:'營業時間', val:'09:00–20:00（最終入場19:00）'},
+      {label:'票價（大人）', val:'約 2,400円'},
+      {label:'3歲以下', val:'免費'},
+      {label:'停車', val:'iias 免費（約3,000台）'},
+    ],
+    actions: [
+      {label:'📍 Google Maps', url:'https://maps.google.com/?q=26.1563,127.6508', cls:'maps-btn'},
+      {label:'🌐 官網', url:'https://kariyushi-aquarium.com/', cls:'info-btn'},
+      {label:'🎟 Klook 購票', url:'https://www.klook.com/zh-TW/activity/16009-dmm-kariyushi-aquarium-okinawa/', cls:'book-btn'},
+    ],
+    note: '餵食體驗需在入館前確認當日時段（限額）。tetote 動物廣場（2025年新開）需另外排隊。'
+  },
+  senaga: {
+    emoji: '🌊',
+    title: '瀨長島 Umikaji Terrace',
+    subtitle: '沖縄県豊見城市瀬長174-6',
+    info: [
+      {label:'MAPCODE', val:'33 002 470*30'},
+      {label:'足湯', val:'免費（24小時）'},
+      {label:'與 OTS 距離', val:'車程約 5 分'},
+      {label:'停車', val:'免費'},
+    ],
+    actions: [
+      {label:'📍 Google Maps', url:'https://maps.google.com/?q=26.1483,127.6583', cls:'maps-btn'},
+      {label:'🌐 官網', url:'https://www.umikajiterrace.com/', cls:'info-btn'},
+    ],
+    note: 'D5 行程：瀨長島玩 1–1.5h → 11:30 離開 → OTS 還車（車程5分）→ 12:00 辦完手續。時間非常充裕。'
+  }
+};
+
+function openModal(key) {
+  const spot = SPOTS[key];
+  if (!spot) return;
+  document.getElementById('modal-emoji').textContent = spot.emoji;
+  document.getElementById('modal-title').textContent = spot.title;
+  document.getElementById('modal-subtitle').textContent = spot.subtitle;
+  
+  let infoHtml = '<div class="modal-info-grid">';
+  spot.info.forEach(i => {
+    infoHtml += `<div class="modal-info-item"><div class="modal-info-label">${i.label}</div><div class="modal-info-val">${i.val}</div></div>`;
+  });
+  infoHtml += '</div>';
+  
+  let actionsHtml = '<div class="modal-action-stack">';
+  spot.actions.forEach(a => {
+    actionsHtml += `<a href="${a.url}" target="_blank" class="modal-btn ${a.cls}">${a.label}</a>`;
+  });
+  actionsHtml += '</div>';
+  
+  let noteHtml = spot.note ? `<div class="modal-note">💡 ${spot.note}</div>` : '';
+  
+  document.getElementById('modal-body').innerHTML = infoHtml + actionsHtml + noteHtml;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+// ── 回到頂部 ──
+(function(){
+  var btn = document.getElementById('backToTop');
+  if (!btn) return;
+  window.addEventListener('scroll', function(){
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, {passive:true});
+})();
+
+// ── 必買必吃圖鑑 ──
+(function(){
+  var BASE = 'https://raw.githubusercontent.com/Anitac-AS/okinawa-2026-photos/main/';
+
+  var CAT_LABEL = {
+    drugstore: '💊 藥妝',
+    snack:     '🍬 零食',
+    food:      '🍜 美食',
+    souvenir:  '🎁 伴手禮'
+  };
+
+  var ITEMS = [
+    // ── 藥妝 ──
+    { file:'p01.jpg', cat:'drugstore', name:'Osaki 眼周清潔棉',           where:'藥妝店',      price:'' },
+    { file:'p02.jpg', cat:'drugstore', name:'ZERIA Molena 鼻下護膚膏',    where:'藥妝店',      price:'¥700' },
+    { file:'p03.jpg', cat:'drugstore', name:'NIVEA 夜間護唇膏',           where:'藥妝店',      price:'' },
+    { file:'p04.jpg', cat:'drugstore', name:'LISSAGE 護手乳',             where:'藥妝店',      price:'' },
+    { file:'p05.jpg', cat:'drugstore', name:'Q&P Kowa 疲勞恢復錠 120錠',  where:'藥妝店',      price:'' },
+    { file:'p06.jpg', cat:'drugstore', name:'Fujiko 髮際線蓬鬆粉',        where:'藥妝店',      price:'' },
+    { file:'p07.jpg', cat:'drugstore', name:'UHA 鐵&葉酸軟糖補充品',      where:'藥妝店',      price:'' },
+    { file:'p08.jpg', cat:'drugstore', name:'Mentholatum 耳朵止癢液',     where:'藥妝店',      price:'' },
+    { file:'p10.jpg', cat:'drugstore', name:'藥妝必買清單（多項）',        where:'藥妝店',      price:'¥598～¥2000' },
+    { file:'p16.jpg', cat:'drugstore', name:'美らりん 沖繩馬油護手霜',     where:'沖繩限定店',  price:'' },
+    { file:'p20.jpg', cat:'drugstore', name:'melt 護髮水 170ml',          where:'藥妝店',      price:'' },
+    { file:'p21.jpg', cat:'drugstore', name:'Nivea 深層保濕霜',           where:'藥妝店',      price:'¥248～' },
+    { file:'p22.jpg', cat:'drugstore', name:'Salonia 靜電防護梳',         where:'Loft／美妝店',price:'' },
+    { file:'img2.jpg',cat:'drugstore', name:'CEZANNE 唇膏',               where:'藥妝店',      price:'' },
+    { file:'img3.jpg',cat:'drugstore', name:'Sato ブリーズライト 鼻腔貼', where:'藥妝店',      price:'' },
+    { file:'image.png',        cat:'drugstore', name:'NAKICO 薬用制汗ミスト COOL 臉部止汗噴霧',        where:'藥妝店',          price:'' },
+    { file:'1754832_0.jpg',    cat:'drugstore', name:'by365 SPF50+ 防曬乳',                           where:'藥妝店',          price:'' },
+    { file:'1754833_0.jpg',    cat:'drugstore', name:'Clé de Peau Beauté 修容霜 SPF25+PA++',          where:'百貨公司／免稅店', price:'' },
+    { file:'1754834_0.jpg',    cat:'drugstore', name:'兒童口腔護理漱口水 3口味（葡萄・草莓・桃子）', where:'藥妝店',          price:'' },
+    { file:'1754835_0.jpg',    cat:'drugstore', name:'トレルーフ 浴室防水膠條系列',                   where:'藥妝店／超市',     price:'' },
+    { file:'1754836_0.jpg',    cat:'drugstore', name:'ロートクリニカル 抗菌目薬（獨立包裝）',         where:'藥妝店',          price:'' },
+    { file:'1775326720795.jpg', cat:'drugstore', name:'アネロン ニスキャップ 暈車藥 12粒', where:'藥妝店', price:'' },
+    { file:'IMG_20260404_022058_590.jpg', cat:'drugstore', name:'MOTON 冷感香水ジェル（數量限定）', where:'藥妝店／Loft', price:'' },
+    { file:'overview_image_152513331_8564431.png', cat:'drugstore', name:'眼部緊緻精華（目のたるみ用）', where:'藥妝店', price:'' },
+    // ── 零食 ──
+    { file:'p18.jpg', cat:'snack', name:'Mintia 多口味口含錠',          where:'便利商店／藥妝', price:'' },
+    { file:'p19.jpg', cat:'snack', name:'ラー油えびせん 辣油蝦片',       where:'零食店',        price:'' },
+    { file:'IMG_20260327_195607_802.jpg', cat:'snack', name:'シママース 沖繩海鹽・タコライス調理包', where:'超市／伴手禮店', price:'¥500～' },
+    // ── 美食 ──
+    { file:'p12.jpg', cat:'food', name:'星巴克 焦糖拿鐵',                where:'スターバックス', price:'' },
+    { file:'p13.jpg', cat:'food', name:'Cheese Fondue Cake 乳酪蛋糕',   where:'沖繩機場',       price:'' },
+    { file:'p17.jpg', cat:'food', name:'Ohayo BRULEE 布蕾優格',          where:'便利商店',       price:'' },
+    { file:'img1.jpg',cat:'food', name:'ほうき星 咖啡',                  where:'那霸空港店',     price:'' },
+    // ── 伴手禮 ──
+    { file:'1754837_0.jpg', cat:'souvenir', name:'ほりにし シークワーサー 沖繩限定戶外調味鹽', where:'超市／伴手禮店', price:'' },
+    { file:'p09.jpg', cat:'souvenir', name:'雜貨精選（Woody香皂・木飯匙等）', where:'雜貨店',       price:'¥355～¥3173' },
+    { file:'p11.jpg', cat:'souvenir', name:'石垣島辣油＆宮古島餅乾',          where:'各店',         price:'¥900～¥2300' },
+    { file:'p14.jpg', cat:'souvenir', name:'沖繩限定もずく芽かぶスープ',      where:'超市／伴手禮店', price:'¥900' },
+    { file:'p15.jpg', cat:'souvenir', name:'海鮮スープ 湯包',                 where:'超市／伴手禮店', price:'' }
+  ];
+
+  function renderGuide(filter) {
+    var grid = document.getElementById('guide-grid');
+    if (!grid) return;
+    var html = '';
+    ITEMS.forEach(function(item) {
+      if (filter !== 'all' && item.cat !== filter) return;
+      var src = BASE + item.file;
+      var priceHtml = item.price ? '<div class="guide-card-price">' + item.price + '</div>' : '';
+      html += '<div class="guide-card" onclick="openLightbox(\'' + src.replace(/'/g,"&#39;") + '\',\'' + item.name.replace(/'/g,"&#39;") + '\',\'📍 ' + item.where.replace(/'/g,"&#39;") + (item.price ? '　' + item.price : '') + '\')">'
+            + '<img class="guide-card-img" src="' + src + '" alt="' + item.name + '" loading="lazy">'
+            + '<div class="guide-card-body">'
+            + '<span class="guide-cat-tag ' + item.cat + '">' + CAT_LABEL[item.cat] + '</span>'
+            + '<div class="guide-card-name">' + item.name + '</div>'
+            + '<div class="guide-card-where">📍 ' + item.where + '</div>'
+            + priceHtml
+            + '</div></div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  window.filterGuide = function(cat, btn) {
+    document.querySelectorAll('.guide-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderGuide(cat);
+  };
+
+  window.openLightbox = function(src, name, meta) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-name').textContent = name;
+    document.getElementById('lightbox-meta').textContent = meta;
+    document.getElementById('img-lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLightbox = function(e) {
+    if (e && e.target !== document.getElementById('img-lightbox') && !e.target.classList.contains('img-lightbox-close')) return;
+    document.getElementById('img-lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // 切到圖鑑 tab 時才渲染（避免提早觸發 404）
+  var _origSwitch = window.switchTab;
+  window.switchTab = function(name) {
+    _origSwitch(name);
+    if (name === 'guide') renderGuide('all');
+  };
+})();
+
+// ── 初始化 ──
+document.getElementById('d1').classList.add('open');
+loadChecklist();
+</script>
+
+</body>
+</html>
