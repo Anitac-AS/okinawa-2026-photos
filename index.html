@@ -3539,66 +3539,79 @@ function openModalMei(key) {
 }
 
 // ── 降雨 + 溫度預報（Open-Meteo，支援 GPS 定位）──
-function loadRain(lat, lon, locLabel) {
-  lat = lat || 26.32; lon = lon || 127.77; locLabel = locLabel || '📍 北谷';
-  var label = '☂ 未來 12h・' + locLabel;
+var _gps = { lat: 26.32, lon: 127.77, label: '📍 北谷' };
+
+function _fetchWeather() {
+  var label = '☂ 未來 12h・' + _gps.label;
   ['rain-location-label','rain-location-label-mei'].forEach(function(id){
     var el = document.getElementById(id); if (el) el.textContent = label;
   });
-  var url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude='+_gps.lat+'&longitude='+_gps.lon
           + '&hourly=precipitation_probability,temperature_2m&timezone=Asia%2FTokyo&forecast_days=2';
   fetch(url).then(function(r){ return r.json(); }).then(function(d) {
-    var times = d.hourly.time;
-    var probs = d.hourly.precipitation_probability;
-    var temps = d.hourly.temperature_2m;
-    var now   = new Date();
+    var times = d.hourly.time, probs = d.hourly.precipitation_probability, temps = d.hourly.temperature_2m;
+    var now = new Date();
     function pad(n){ return n < 10 ? '0'+n : ''+n; }
     var nowKey = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'T'+pad(now.getHours())+':00';
     var idx = times.indexOf(nowKey); if (idx < 0) idx = 0;
-    var pSlice = probs.slice(idx, idx+12);
-    var tSlice = times.slice(idx, idx+12);
-    var tempSlice = temps.slice(idx, idx+12);
-    function buildBars(containerId) {
-      var c = document.getElementById(containerId); if (!c) return;
+    var pSlice = probs.slice(idx,idx+12), tSlice = times.slice(idx,idx+12), tempSlice = temps.slice(idx,idx+12);
+    ['rain-bars-yu','rain-bars-mei'].forEach(function(cid){
+      var c = document.getElementById(cid); if (!c) return;
       c.innerHTML = '';
-      pSlice.forEach(function(p, i) {
-        var h    = tSlice[i].slice(11,13);
-        var temp = Math.round(tempSlice[i]);
-        var barH = Math.max(2, Math.round(p * 0.2));  // max ~20px
-        var color = p < 20 ? '#6DD678' : p < 50 ? '#FFD43B' : p < 80 ? '#FF9A3C' : '#FF5252';
-        var col = document.createElement('div');
-        col.className = 'rain-col';
+      pSlice.forEach(function(p,i){
+        var h = tSlice[i].slice(11,13), temp = Math.round(tempSlice[i]);
+        var barH = Math.max(2, Math.round(p * 0.2));
+        var color = p<20?'#6DD678':p<50?'#FFD43B':p<80?'#FF9A3C':'#FF5252';
+        var col = document.createElement('div'); col.className = 'rain-col';
         col.innerHTML = '<div class="rain-temp">'+temp+'°</div>'
                       + '<div class="rain-bar" style="height:'+barH+'px;background:'+color+'"></div>'
                       + '<div class="rain-hr">'+h+'</div>';
         c.appendChild(col);
       });
-    }
-    buildBars('rain-bars-yu');
-    buildBars('rain-bars-mei');
-  }).catch(function() {
+    });
+  }).catch(function(){
     ['rain-bars-yu','rain-bars-mei'].forEach(function(id){
-      var c = document.getElementById(id);
-      if (c) c.innerHTML = '<div class="rain-loading">暫無法載入</div>';
+      var c = document.getElementById(id); if(c) c.innerHTML='<div class="rain-loading">暫無法載入</div>';
     });
   });
 }
 
-// 嘗試 GPS，5 秒內取不到則 fallback 北谷
+function _requestGPS(onSuccess, onFail) {
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      _gps.lat = pos.coords.latitude;
+      _gps.lon = pos.coords.longitude;
+      _gps.label = '📍 目前位置';
+      onSuccess();
+    },
+    onFail,
+    { timeout: 8000, maximumAge: 300000 }  // 快取 5 分鐘，重整頁面近乎即時
+  );
+}
+
+// 更新按鈕：重新定位再 fetch（用已快取位置，幾乎不等）
+function loadRain() {
+  ['rain-bars-yu','rain-bars-mei'].forEach(function(id){
+    var c = document.getElementById(id); if(c) c.innerHTML='<div class="rain-loading">更新中…</div>';
+  });
+  if (navigator.geolocation) {
+    _requestGPS(_fetchWeather, _fetchWeather);  // 成功或失敗都 fetch（失敗用 _gps 現有值）
+  } else {
+    _fetchWeather();
+  }
+}
+
+// 頁面初始化：5 秒 fallback 保護
 (function initRain() {
   if (navigator.geolocation) {
     var done = false;
-    var timer = setTimeout(function(){ if (!done){ done=true; loadRain(); } }, 5000);
-    navigator.geolocation.getCurrentPosition(
-      function(pos) {
-        if (done) return; done = true; clearTimeout(timer);
-        loadRain(pos.coords.latitude, pos.coords.longitude, '📍 目前位置');
-      },
-      function() { if (!done){ done=true; clearTimeout(timer); loadRain(); } },
-      { timeout: 4500, maximumAge: 60000 }
+    var timer = setTimeout(function(){ if(!done){ done=true; _fetchWeather(); } }, 5000);
+    _requestGPS(
+      function(){ if(!done){ done=true; clearTimeout(timer); _fetchWeather(); } },
+      function(){ if(!done){ done=true; clearTimeout(timer); _fetchWeather(); } }
     );
   } else {
-    loadRain();
+    _fetchWeather();
   }
 })();
 
