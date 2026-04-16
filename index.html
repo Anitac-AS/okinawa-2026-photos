@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>沖繩初體驗 🌺 羽家行程手帳</title>
+<title>沖繩初體驗 🌺 兩家行程手帳</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -25,7 +25,73 @@
     --card-shadow: 0 4px 20px rgba(43,158,179,0.12);
     --radius: 20px;
     --radius-sm: 12px;
+    /* 渼家專屬主色 */
+    --mei: #7B5EA7;
+    --mei-dark: #5A3F82;
+    --mei-light: #F0EAFF;
+    --mei-mid: #D8C8F5;
+    /* 動態主色（JS切換用） */
+    --active: var(--ocean);
+    --active-dark: var(--ocean-dark);
+    --active-light: var(--sky-light);
+    --active-shadow: rgba(43,158,179,0.12);
   }
+  body.family-mei {
+    --active: var(--mei);
+    --active-dark: var(--mei-dark);
+    --active-light: var(--mei-light);
+    --active-shadow: rgba(123,94,167,0.10);
+    background: var(--mei-light);
+  }
+
+  /* ── FAMILY TOGGLE PILL ── */
+  .family-toggle-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 4px;
+  }
+  .family-toggle {
+    display: flex;
+    background: rgba(255,255,255,0.22);
+    border: 1.5px solid rgba(255,255,255,0.45);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+    position: relative;
+  }
+  .family-btn {
+    position: relative;
+    z-index: 1;
+    padding: 6px 18px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .family-btn.active {
+    background: white;
+    color: var(--ocean-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  body.family-mei .family-btn.active {
+    color: var(--mei);
+  }
+  /* 渼家 header 配色 */
+  body.family-mei .header {
+    background: linear-gradient(160deg, var(--mei) 0%, #B39DDB 100%);
+  }
+  body.family-mei .header::after {
+    background: linear-gradient(160deg, var(--mei) 0%, #B39DDB 100%);
+  }
+  /* tab bar active 顏色跟著切換 */
+  body.family-mei .tab-item.active { color: var(--mei); }
+  body.family-mei .top-tab.active { background: var(--mei); border-color: var(--mei); }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1029,18 +1095,25 @@
     </g>
   </svg>
 
-  <span class="header-emoji-float">🌺</span>
-  <h1>沖繩初體驗・羽家行程手帳</h1>
-  <p class="header-sub">第一次帶雙寶出國，一起衝！🌊</p>
+  <!-- 家庭切換 pill -->
+  <div class="family-toggle-wrap">
+    <div class="family-toggle">
+      <button class="family-btn active" id="pill-yu" onclick="switchFamily('yu')">🌊 羽家</button>
+      <button class="family-btn" id="pill-mei" onclick="switchFamily('mei')">🌸 渼家</button>
+    </div>
+  </div>
+  <span class="header-emoji-float" id="header-emoji">🌺</span>
+  <h1 id="header-title">沖繩初體驗・羽家行程手帳</h1>
+  <p class="header-sub" id="header-sub">第一次帶雙寶出國，一起衝！🌊</p>
   <div class="header-badges">
     <span class="badge">📅 5/15-5/19</span>
     <span class="badge">🏨 北谷麗嘉 4晚</span>
-    <span class="badge">🚗 雙車雙家同行</span>
+    <span class="badge" id="header-badge3">🚗 雙車雙家同行</span>
   </div>
 </div>
 
 <!-- ── SECTION: 行程 ── -->
-<div id="sec-itinerary" class="page-section active">
+<div id="sec-itinerary-yu" class="page-section active">
 <div class="main">
   <!-- INFO STRIP -->
   <div class="info-strip">
@@ -1709,7 +1782,7 @@
 </div>
 
 <!-- ── SECTION: 航班 & 預約 ── -->
-<div id="sec-booking" class="page-section">
+<div id="sec-booking-yu" class="page-section">
 <div class="main">
 
   <div class="section-title" style="margin-top:20px">✈️ 航班資訊</div>
@@ -2126,7 +2199,241 @@
 
   </div><!-- /wallet-grid -->
 </div>
-</div><!-- /sec-booking -->
+</div><!-- /sec-booking-yu -->
+
+<!-- ── SECTION: 行程（渼家）── -->
+<div id="sec-itinerary-mei" class="page-section">
+<div class="main">
+  <div class="info-strip">
+    <div class="info-item"><div class="info-label">天數</div><div class="info-value">5天4夜</div></div>
+    <div class="info-item"><div class="info-label">基地</div><div class="info-value">北谷麗嘉</div></div>
+    <div class="info-item"><div class="info-label">渼家合計</div><div class="info-value">2大 1小 🐢</div></div>
+  </div>
+  <div class="top-tabs">
+    <button class="top-tab active" onclick="jumpDay_mei('m-d1')">D1 抵達</button>
+    <button class="top-tab" onclick="jumpDay_mei('m-d2')">D2 美麗海</button>
+    <button class="top-tab" onclick="jumpDay_mei('m-d3')">D3 琉裝+PARCO</button>
+    <button class="top-tab" onclick="jumpDay_mei('m-d4')">D4 南部</button>
+    <button class="top-tab" onclick="jumpDay_mei('m-d5')">D5 回家</button>
+  </div>
+  <div class="section-title">🗓 逐日行程</div>
+
+  <!-- ══ D1 ══ -->
+  <div class="day-card" id="m-d1">
+    <div class="day-header" onclick="toggle('m-d1')">
+      <span class="day-badge d1">Day 1</span>
+      <span class="day-title">✈️ 晚班支援・Family 取車北上會師</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(8,10)"><path d="M2 18 L28 8 L42 12 L36 18 Z" fill="#D8C8F5" stroke="#7B5EA7" stroke-width="1.2" stroke-linejoin="round"/><path d="M20 12 L26 4 L32 6 L26 14Z" fill="#EEE8FF" stroke="#7B5EA7" stroke-width="1" stroke-linejoin="round"/><path d="M6 18 L10 22 L16 20 L14 16Z" fill="#EEE8FF" stroke="#7B5EA7" stroke-width="1" stroke-linejoin="round"/><circle cx="36" cy="13" r="1.5" fill="#FFD166"/></g>
+          <g transform="translate(40,6)" opacity="0.7"><ellipse cx="8" cy="8" rx="8" ry="5" fill="white" stroke="#D8C8F5" stroke-width="1"/><ellipse cx="14" cy="9" rx="7" ry="4" fill="white" stroke="#D8C8F5" stroke-width="1"/><ellipse cx="3" cy="10" rx="5" ry="3.5" fill="white" stroke="#D8C8F5" stroke-width="1"/></g>
+          <path d="M0 42 Q18 38 36 42 Q54 46 72 42 L72 52 L0 52Z" fill="#EEE8FF"/>
+          <path d="M0 46 Q18 42 36 46 Q54 50 72 46 L72 52 L0 52Z" fill="#D8C8F5"/>
+        </svg>
+        <div class="day-illus-caption">樂桃 MM924 晚班落地，<br>Family 租車取車後北上，<br>20:00 與羽家會師 🎉</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot travel">✈️</div><div class="tl-content"><div class="tl-time">14:50</div><div class="tl-main">台灣出發</div><div class="tl-sub">樂桃航空 MM924｜飛行約 1h 45m</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🛬</div><div class="tl-content"><div class="tl-time">17:35</div><div class="tl-main">抵達那霸空港</div><div class="tl-sub">樂桃停靠國際線端，走道較長。入境＋等行李約 40 分，出關約 18:15</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚕</div><div class="tl-content"><div class="tl-time">18:15</div><div class="tl-main">搭計程車前往 Family 租車</div><div class="tl-sub">機場→赤嶺 Family 約 10 分（~1,000–1,500 日圓）。送迎 17:30 截止趕不上，搭 taxi 最快</div><div class="tl-mapcode"><span class="mapcode">33 064 264*33</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">18:25–19:15</div><div class="tl-main" onclick="openModalMei('familycar')" class="clickable">Family 租車取車 ↗</div><div class="tl-sub">trip.com 預訂，營業至 23:00 時間充裕。辦手續＋安裝兒童座椅約 45 分</div></div></div>
+        <div class="tl-item"><div class="tl-dot food">🍱</div><div class="tl-content"><div class="tl-time">19:15</div><div class="tl-main">赤嶺周邊覓食</div><div class="tl-sub">便利商店 / 麥當勞帶走，車上吃省時間</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🛣</div><div class="tl-content"><div class="tl-time">19:30</div><div class="tl-main">北上北谷（約 40 分）</div></div></div>
+        <div class="tl-item"><div class="tl-dot sleep">🎉</div><div class="tl-content"><div class="tl-time">20:00–20:30</div><div class="tl-main" onclick="openModalMei('hotel')" class="clickable">與羽家會師！Check-in 麗嘉 ↗</div><div class="tl-sub">Family 離機場近、免等巴士，比 OTS 快到！羽家先安頓好等渼家到齊 😄</div><div class="tl-mapcode"><span class="mapcode">33 525 209*88</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ D2 ══ -->
+  <div class="day-card" id="m-d2">
+    <div class="day-header" onclick="toggle('m-d2')">
+      <span class="day-badge d2">Day 2</span>
+      <span class="day-title">🐠 北部遠征：美麗海水族館 × 古宇利島蝦蝦飯</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(4,4)"><ellipse cx="28" cy="22" rx="22" ry="14" fill="#2B9EB3" opacity="0.85"/><ellipse cx="28" cy="22" rx="16" ry="9" fill="#B3E0EE" opacity="0.6"/><path d="M48 18 Q56 14 54 22 Q56 30 48 26Z" fill="#2B9EB3" opacity="0.85"/><circle cx="16" cy="18" r="2.5" fill="white"/><circle cx="16.5" cy="18" r="1.2" fill="#2C3E50"/><path d="M20 26 Q24 28 28 26" stroke="white" stroke-width="1.2" fill="none"/><circle cx="56" cy="10" r="2" fill="none" stroke="#87CEEB" stroke-width="1"/><circle cx="60" cy="16" r="1.5" fill="none" stroke="#87CEEB" stroke-width="0.8"/></g>
+          <path d="M0 42 Q18 38 36 42 Q54 46 72 42 L72 52 L0 52Z" fill="#EEE8FF"/>
+        </svg>
+        <div class="day-illus-caption">美麗海水族館鯨鯊！<br>古宇利島吃蝦蝦飯，<br>北部經典路線 🌊</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot food">🍳</div><div class="tl-content"><div class="tl-time">08:00–09:00</div><div class="tl-main">飯店豐盛早餐</div><div class="tl-sub">麗嘉早餐悠閒吃，補滿體力再出發。今天車程最長，吃飽很重要！</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">09:00</div><div class="tl-main">出發北上（沖繩自動車道→許田 IC，約 1.5h）</div><div class="tl-sub">全程最長駕駛日，來回約 3–3.5h。孩子可在車上補眠</div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🐠</div><div class="tl-content"><div class="tl-time">10:30</div><div class="tl-main" onclick="openModalMei('churaumi')" class="clickable">美麗海水族館 ↗</div><div class="tl-sub">世界最大級「黑潮之海」水槽！鯨鯊、鬼蝠魟超震撼。6 歲未滿免費入場</div><div class="tl-mapcode"><span class="mapcode">553 075 797*74</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🐬</div><div class="tl-content"><div class="tl-time">10:30–12:30</div><div class="tl-main">水族館＋海豚劇場（約 2h）</div><div class="tl-sub">珊瑚礁→黑潮之海→深海區→海豚劇場。P7 北門停車場最近，免費</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">12:30</div><div class="tl-main">開車前往古宇利島（約 25–30 分）</div><div class="tl-sub">古宇利大橋跨海直行，兩側碧藍海水，超壯觀！孩子會尖叫</div></div></div>
+        <div class="tl-item"><div class="tl-dot food">🦐</div><div class="tl-content"><div class="tl-time">13:00</div><div class="tl-main" onclick="openModalMei('kouri')" class="clickable">古宇利島蝦蝦飯午餐 ↗</div><div class="tl-sub">台灣人必吃沖繩美食！蒜香奶油蝦超過癮。有停車場、廁所＋換尿布台，親子友善</div><div class="tl-mapcode"><span class="mapcode">485 692 168*56</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🏖</div><div class="tl-content"><div class="tl-time">13:45–15:00</div><div class="tl-main">古宇利島散步拍照</div><div class="tl-sub">古宇利大橋絕景拍照、古宇利ビーチ踩沙。5歲可以玩得很開心！</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">15:00</div><div class="tl-main">出發南下回北谷（約 1.5h）</div><div class="tl-sub">15:00 出發避傍晚車潮，16:30–17:00 回到飯店讓孩子休息</div></div></div>
+        <div class="tl-item"><div class="tl-dot sleep">🏨</div><div class="tl-content"><div class="tl-time">16:30–17:00</div><div class="tl-main">回飯店休息</div><div class="tl-sub">今天開車多，早回讓 5 歲充電。這是唯一需要早回的一天</div></div></div>
+        <div class="tl-item"><div class="tl-dot food">🍽</div><div class="tl-content"><div class="tl-time">18:00</div><div class="tl-main">晚餐：與羽家共享</div><div class="tl-sub">De-jinatonton / 迴轉壽司 / 琉球之牛</div></div></div>
+      </div>
+      <div class="food-section"><div class="food-title">🍽 晚餐選擇（回北谷後）</div><div class="food-grid">
+        <div class="food-chip star"><span class="food-star">⭐</span><div class="food-chip-name">De-jinatonton</div><div class="food-chip-desc">龍宮城風親子居酒屋｜兒童遊戲空間</div></div>
+        <div class="food-chip"><div class="food-chip-name">琉球之牛 北谷店</div><div class="food-chip-desc">燒肉｜多人聚餐首選，需預約</div></div>
+        <div class="food-chip"><div class="food-chip-name">北海素材迴轉壽司</div><div class="food-chip-desc">孩子最愛，玩了一天最省力</div></div>
+      </div></div>
+      <div class="alert-box"><strong>⚠️ 行前必做：</strong>美麗海水族館門票建議 Klook/KKday 網路預購（比現場便宜、QR 入場免排隊）。今天是唯一需要早回的一天，來回車程約 3.5h</div>
+      <div class="rain-badge">☂ 雨天備案：水族館室內不受影響，古宇利島改為車上欣賞大橋，蝦蝦飯有室內座位</div>
+    </div>
+  </div>
+
+  <!-- ══ D3 ══ -->
+  <div class="day-card" id="m-d3">
+    <div class="day-header" onclick="toggle('m-d3')">
+      <span class="day-badge d3">Day 3</span>
+      <span class="day-title">👘 琉裝美人 × 波上宮 × PARCO CITY</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(10,2)"><rect x="8" y="14" width="20" height="28" rx="2" fill="#D8C8F5"/><path d="M8 14 L18 8 L28 14Z" fill="#EEE8FF" stroke="#7B5EA7" stroke-width="0.8"/><path d="M8 14 Q6 20 8 28 L12 42 L18 42 L18 14Z" fill="#B39DDB"/><path d="M28 14 Q30 20 28 28 L24 42 L18 42 L18 14Z" fill="#9575CD"/><line x1="8" y1="22" x2="28" y2="22" stroke="#7B5EA7" stroke-width="0.8" opacity="0.5"/><circle cx="18" cy="10" r="5" fill="#FFDFA0" stroke="#E0B070" stroke-width="0.8"/><circle cx="22" cy="8" r="2" fill="#FF7B7B" opacity="0.8"/><circle cx="22" cy="5" r="1.5" fill="#FFB3C6" opacity="0.7"/><circle cx="24.5" cy="7" r="1.5" fill="#FFB3C6" opacity="0.7"/></g>
+          <text x="50" y="20" font-size="10" fill="#D8C8F5">✦</text><text x="4" y="40" font-size="8" fill="#D8C8F5" opacity="0.8">✦</text><text x="58" y="38" font-size="7" fill="#7B5EA7" opacity="0.6">✦</text>
+        </svg>
+        <div class="day-illus-caption">穿琉裝去波上宮！<br>下午 PARCO CITY 掃貨，<br>回北谷超近 📸</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">09:30</div><div class="tl-main">從北谷出發那霸</div><div class="tl-sub">車程 25–30 分＋找停車 5–10 分</div></div></div>
+        <div class="tl-item"><div class="tl-dot shop">👘</div><div class="tl-content"><div class="tl-time">10:00–10:30</div><div class="tl-main" onclick="openModalMei('ryuso')" class="clickable">琉裝美人報到 ↗</div><div class="tl-sub">10:00 到工作室辦理，著裝約 30 分，10:30 正式開始拍攝。5歲兒童款超可愛</div></div></div>
+        <div class="tl-item"><div class="tl-dot play">📸</div><div class="tl-content"><div class="tl-time">10:30–12:00</div><div class="tl-main">琉裝拍攝・國際通散步</div><div class="tl-sub">穿著琉裝漫步國際通、壺屋通り取景。保留 1.5h 拍攝時間</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚶</div><div class="tl-content"><div class="tl-time">12:00–12:15</div><div class="tl-main">步行前往波上宮</div><div class="tl-sub">距工作室約 15 分步行，沿途繼續拍攝</div></div></div>
+        <div class="tl-item"><div class="tl-dot play">⛩</div><div class="tl-content"><div class="tl-time">12:15–12:45</div><div class="tl-main" onclick="openModalMei('naminouegu')" class="clickable">波上宮參拜・拍攝 ↗</div><div class="tl-sub">沖繩最重要神社，海崖上眺望那霸港。穿琉裝在石段拍攝超好看！免費</div><div class="tl-mapcode"><span class="mapcode">33 185 122*55</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🏖</div><div class="tl-content"><div class="tl-time">12:45–13:30</div><div class="tl-main">波之上海灘・野餐午餐</div><div class="tl-sub">附近買便當 / 超商，海灘野餐。5歲踩沙玩水</div></div></div>
+        <div class="tl-item"><div class="tl-dot shop">👗</div><div class="tl-content"><div class="tl-time">13:30</div><div class="tl-main">步行回工作室・歸還琉裝</div><div class="tl-sub">走路約 15 分回到琉裝美人</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">14:00</div><div class="tl-main">開車前往 PARCO CITY（約 15–20 分）</div><div class="tl-sub">PARCO 在浦添，是那霸回北谷的中繼站，順路不繞路！</div></div></div>
+        <div class="tl-item"><div class="tl-dot shop">🛒</div><div class="tl-content"><div class="tl-time">14:30–18:00</div><div class="tl-main" onclick="openModalMei('parco')" class="clickable">PARCO CITY 掃貨 ↗</div><div class="tl-sub">藥妝、童裝掃貨＋3F namco 兒童設施讓 5 歲放電，大人繼續逛！</div><div class="tl-mapcode"><span class="mapcode">33 308 868*53</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot food">🍽</div><div class="tl-content"><div class="tl-time">18:00–19:00</div><div class="tl-main">PARCO CITY 晚餐</div><div class="tl-sub">極味屋漢堡排（2F）/ 三浦三崎港迴轉壽司（3F）/ A&W</div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🌅</div><div class="tl-content"><div class="tl-time">19:00</div><div class="tl-main">3F 展望台看夕陽（5 月日落約 19:00）</div><div class="tl-sub">吃完飯剛好看夕陽，完美收尾</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">19:30</div><div class="tl-main">回北谷（僅 15 分！）</div><div class="tl-sub">比從國際通回來省一半時間，晚上 8 點前到家</div></div></div>
+      </div>
+      <div class="food-section"><div class="food-title">🍽 PARCO 晚餐選擇（擇一）</div><div class="food-grid">
+        <div class="food-chip star"><span class="food-star">⭐</span><div class="food-chip-name">極味屋漢堡排</div><div class="food-chip-desc">PARCO 2F｜鐵板漢堡排超人氣</div></div>
+        <div class="food-chip star"><span class="food-star">⭐</span><div class="food-chip-name">三浦三崎港壽司</div><div class="food-chip-desc">PARCO 3F｜迴轉壽司，孩子最愛</div></div>
+        <div class="food-chip"><div class="food-chip-name">A&W 沖繩漢堡</div><div class="food-chip-desc">沖繩限定 Root Beer！快速方便</div></div>
+      </div></div>
+      <div class="alert-box"><strong>⚠️ 琉裝預約重點：</strong>已選定「琉裝美人」工作室，出發一週前確認天氣是晴天才預約（雨天穿不了）。5歲兒童款確認庫存</div>
+      <div class="rain-badge">☂ 雨天備案：琉裝取消（未預約），改為 PARCO CITY 全日。D4 國際通可補琉裝拍攝</div>
+    </div>
+  </div>
+
+  <!-- ══ D4 ══ -->
+  <div class="day-card" id="m-d4">
+    <div class="day-header" onclick="toggle('m-d4')">
+      <span class="day-badge d4">Day 4</span>
+      <span class="day-title">🐧 南部會師：DMM水族館 × 那霸國際通</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(6,2)"><ellipse cx="16" cy="28" rx="12" ry="16" fill="#2C3E50"/><ellipse cx="16" cy="28" rx="7" ry="11" fill="white"/><circle cx="16" cy="10" r="9" fill="#2C3E50"/><ellipse cx="16" cy="10" rx="5" ry="5.5" fill="white"/><circle cx="13" cy="9" r="2" fill="white"/><circle cx="19" cy="9" r="2" fill="white"/><circle cx="13.5" cy="9" r="1" fill="#2C3E50"/><circle cx="19.5" cy="9" r="1" fill="#2C3E50"/><path d="M13 13 Q16 15 19 13" fill="#FFD166" stroke="#FFB830" stroke-width="0.5"/><ellipse cx="12" cy="41" rx="4" ry="2.5" fill="#FFD166"/><ellipse cx="20" cy="41" rx="4" ry="2.5" fill="#FFD166"/></g>
+          <path d="M0 46 Q18 42 36 46 Q54 50 72 46 L72 52 L0 52Z" fill="#EEE8FF"/>
+        </svg>
+        <div class="day-illus-caption">與羽家南下會師！<br>DMM 企鵝近距離，<br>國際通最後血拚 🛒</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">09:00</div><div class="tl-main">與羽家一起出發南下</div><div class="tl-sub">北谷→iias 豐崎約 25–30 分，兩車同步出發</div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🐠</div><div class="tl-content"><div class="tl-time">09:30</div><div class="tl-main" onclick="openModalMei('dmm')" class="clickable">DMM Kariyushi 水族館 ↗</div><div class="tl-sub">企鵝、樹懶、迷你豬近距離互動！tetote 動物廣場。建議網路購票</div><div class="tl-mapcode"><span class="mapcode">232 543 400*25</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot food">🥩</div><div class="tl-content"><div class="tl-time">12:00</div><div class="tl-main">iias 豐崎午餐</div><div class="tl-sub">OK STEAK × HAMBURG 或 iias 超市熟食區，兩家一起</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">13:00</div><div class="tl-main">移動至國際通（約 25–30 分）</div><div class="tl-sub">5歲睡車上補午覺，完美銜接</div></div></div>
+        <div class="tl-item"><div class="tl-dot shop">🧧</div><div class="tl-content"><div class="tl-time">13:30–18:30</div><div class="tl-main">國際通掃街</div><div class="tl-sub">唐吉軻德、藥妝最終補貨。兩家一起逛，孩子互相作伴</div><div class="tl-mapcode"><span class="mapcode">33 157 444*60</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot food">🏮</div><div class="tl-content"><div class="tl-time">18:30–19:30</div><div class="tl-main">晚餐：國際通</div><div class="tl-sub">屋台村（各選各最方便）或燒肉本部牧場（需提前預約）</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">19:30–20:30</div><div class="tl-main">返回北谷・整理行李</div><div class="tl-sub">5歲體力夠，晚點回沒問題。明天退房，今晚整理打包</div></div></div>
+      </div>
+      <div class="food-section"><div class="food-title">🏮 晚餐選擇（擇一）</div><div class="food-grid">
+        <div class="food-chip star"><span class="food-star">⭐</span><div class="food-chip-name">國際通屋台村</div><div class="food-chip-desc">20間屋台｜兩家各選各的，紅燈籠夜市感超棒</div></div>
+        <div class="food-chip"><div class="food-chip-name">燒肉本部牧場</div><div class="food-chip-desc">本部牛熱門店｜需提前預約</div></div>
+        <div class="food-chip"><div class="food-chip-name">KOBAKO 沖繩料理</div><div class="food-chip-desc">島野菜＋阿古豬，正宗在地沖繩味</div></div>
+      </div></div>
+      <div class="alert-box"><strong>⚠️ 注意：</strong>DMM 餵食體驗（企鵝/樹懶）限額，入館後先確認當天時段並登記</div>
+      <div class="rain-badge">☂ 雨天備案：DMM + iias 全日室內，完全免疫</div>
+    </div>
+  </div>
+
+  <!-- ══ D5 ══ -->
+  <div class="day-card" id="m-d5">
+    <div class="day-header" onclick="toggle('m-d5')">
+      <span class="day-badge d5">Day 5</span>
+      <span class="day-title">✈️ 共同撤退！瀨長島足湯 → Family 還車 → 飛台灣</span>
+      <span class="day-toggle">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-illus">
+        <svg width="72" height="52" viewBox="0 0 72 52" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(6,4)"><rect x="4" y="10" width="28" height="32" rx="4" fill="#FFD166" stroke="#C8A000" stroke-width="1.5"/><rect x="12" y="6" width="12" height="6" rx="2" fill="none" stroke="#C8A000" stroke-width="1.5"/><line x1="4" y1="26" x2="32" y2="26" stroke="#C8A000" stroke-width="1.2"/><rect x="14" y="20" width="8" height="10" rx="2" fill="white" stroke="#C8A000" stroke-width="1"/><circle cx="6" cy="42" r="2.5" fill="#A08000"/><circle cx="30" cy="42" r="2.5" fill="#A08000"/></g>
+          <g transform="translate(46,8)" opacity="0.85"><circle cx="8" cy="8" r="3.5" fill="#FF7B7B"/><circle cx="8" cy="2" r="2" fill="#FFB3C6"/><circle cx="8" cy="14" r="2" fill="#FFB3C6"/><circle cx="2" cy="8" r="2" fill="#FFB3C6"/><circle cx="14" cy="8" r="2" fill="#FFB3C6"/></g>
+          <text x="50" y="38" font-size="12" fill="#D8C8F5" opacity="0.9">✦</text>
+        </svg>
+        <div class="day-illus-caption">最後早晨打包，<br>瀨長島足湯收尾，<br>帶著滿滿回憶回家 🌸</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot sleep">📦</div><div class="tl-content"><div class="tl-time">08:30 開始打包</div><div class="tl-main">退房 09:00｜行李裝車出發</div><div class="tl-sub">與羽家同步，08:30 起床就開始收，09:00 精準退房，09:30 前出發</div></div></div>
+        <div class="tl-item"><div class="tl-dot play">🌊</div><div class="tl-content"><div class="tl-time">10:00</div><div class="tl-main" onclick="openModalMei('senaga')" class="clickable">瀨長島 Umikaji Terrace・足湯散步 ↗</div><div class="tl-sub">北谷出發約 30–35 分。白色希臘風街道，免費足湯泡腳，買塔可飯帶上飛機！玩 1–1.5h</div><div class="tl-mapcode"><span class="mapcode">33 002 470*30</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚗</div><div class="tl-content"><div class="tl-time">11:15</div><div class="tl-main">出發→Family 租車還車</div><div class="tl-sub">瀨長島→赤嶺 Family 約 15 分。先找加油站加滿油再還車</div><div class="tl-mapcode"><span class="mapcode">33 064 264*33</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">🚕</div><div class="tl-content"><div class="tl-time">11:30–12:00</div><div class="tl-main">還車手續＋前往機場</div><div class="tl-sub">還車完搭送迎（營業時間內有）或 taxi 約 10 分抵達機場</div></div></div>
+        <div class="tl-item"><div class="tl-dot alert">⚠️</div><div class="tl-content"><div class="tl-time">12:15</div><div class="tl-main">那霸機場・與羽家會合 Check-in</div><div class="tl-sub">羽家 OTS 還車走不同路線，機場會合一起辦手續。兩家六人＋推車，預留 40 分</div></div></div>
+        <div class="tl-item"><div class="tl-dot alert">🚨</div><div class="tl-content"><div class="tl-time">15:00 — 硬性截止</div><div class="tl-main">完成安全檢查・候機</div><div class="tl-sub">提早完成就去免稅店逛逛，買機場限定伴手禮！</div></div></div>
+        <div class="tl-item"><div class="tl-dot travel">✈️</div><div class="tl-content"><div class="tl-time">18:20</div><div class="tl-main">VZ569 與羽家同機起飛！</div><div class="tl-sub">帶著滿滿回憶飛回台灣 🌸</div></div></div>
+        <div class="tl-item"><div class="tl-dot sleep">🏠</div><div class="tl-content"><div class="tl-time">18:55</div><div class="tl-main">抵達台灣桃園</div><div class="tl-sub">沖繩初體驗，圓滿落幕！5歲的第一次出國 🌺</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /sec-itinerary-yu -->
+
+<!-- ── SECTION: 航班 & 預約 ── -->
+<div id="sec-booking-mei" class="page-section">
+<div class="main">
+  <div class="section-title" style="margin-top:20px">✈️ 航班資訊</div>
+  <div class="flight-wrap">
+    <div class="boarding-card">
+      <div class="bc-header"><div><div class="bc-airline">Peach Aviation 樂桃航空</div><div class="bc-flight">MM 924</div><div class="bc-dir">去程｜台灣 → 沖繩</div></div><div class="bc-badge">D1<br>晚班</div></div>
+      <div class="bc-route"><div class="bc-city"><div class="bc-city-code">TPE</div><div class="bc-city-name">台灣桃園</div><div class="bc-time">14:50</div></div><div class="bc-arrow"><div class="bc-arrow-line"></div><div class="bc-duration">約 1h 45m</div></div><div class="bc-city right"><div class="bc-city-code">OKA</div><div class="bc-city-name">那霸空港</div><div class="bc-time">17:35</div></div></div>
+      <div class="bc-footer"><div class="bc-info-item"><div class="bc-info-label">航班</div><div class="bc-info-val">MM924</div></div><div class="bc-info-item"><div class="bc-info-label">航空公司</div><div class="bc-info-val">Peach</div></div><div class="bc-info-item"><div class="bc-info-label">預計取車完</div><div class="bc-info-val">19:15</div></div></div>
+      <a href="https://www.flypeach.com/tw" target="_blank" class="bc-checkin-btn">🌐 前往樂桃線上 Check-in</a>
+    </div>
+    <div class="boarding-card">
+      <div class="bc-header" style="background:linear-gradient(135deg,#C04040,#8B0000)"><div><div class="bc-airline">Thai VietJet Air 泰越捷航空</div><div class="bc-flight">VZ 569</div><div class="bc-dir">回程｜沖繩 → 台灣（與羽家同班）</div></div><div class="bc-badge">D5 回家</div></div>
+      <div class="bc-route"><div class="bc-city"><div class="bc-city-code">OKA</div><div class="bc-city-name">那霸空港</div><div class="bc-time">18:20</div></div><div class="bc-arrow"><div class="bc-arrow-line" style="background:linear-gradient(90deg,#FFCDD2,#C04040,#FFCDD2)"></div><div class="bc-duration">約 1h 35m</div></div><div class="bc-city right"><div class="bc-city-code">TPE</div><div class="bc-city-name">台灣桃園</div><div class="bc-time">18:55</div></div></div>
+      <div class="bc-footer"><div class="bc-info-item"><div class="bc-info-label">航班</div><div class="bc-info-val">VZ569</div></div><div class="bc-info-item"><div class="bc-info-label">check-in 截止</div><div class="bc-info-val">15:00</div></div><div class="bc-info-item"><div class="bc-info-label">同行</div><div class="bc-info-val">羽家同班✈</div></div></div>
+      <a href="https://www.vietjetair.com/tw" target="_blank" class="bc-checkin-btn" style="background:#FFEBEE;border-color:#FFCDD2;color:#C04040">🌐 前往 VietJet 線上 Check-in</a>
+    </div>
+  </div>
+
+  <div class="section-title">🗂 預約夾</div>
+  <div class="wallet-grid">
+    <!-- 麗嘉 渼家房 -->
+    <div class="booking-card" id="m-bk-hotel"><div class="bk-header" onclick="toggleBk('m-bk-hotel')"><div class="bk-icon" style="background:var(--mei-light)">🏨</div><div><div class="bk-title">麗嘉皇家度假酒店｜渼家房</div><div class="bk-sub">北谷 · 4晚</div></div><span class="bk-toggle">▾</span></div>
+      <div class="bk-body"><div class="bk-detail-grid"><div class="bk-detail-item"><div class="bk-detail-label">訂單編號</div><div class="bk-detail-val highlight">20260515-1309</div></div><div class="bk-detail-item"><div class="bk-detail-label">Check-in</div><div class="bk-detail-val">15:00</div></div><div class="bk-detail-item"><div class="bk-detail-label">Check-out</div><div class="bk-detail-val">11:00（D5 09:00）</div></div><div class="bk-detail-item"><div class="bk-detail-label">D1 預計入住</div><div class="bk-detail-val">20:00–20:30</div></div><div class="bk-detail-item bk-detail-full"><div class="bk-detail-label">地址</div><div class="bk-detail-val">沖縄県中頭郡北谷町字美浜15-69</div></div></div><div class="bk-separator"></div><div class="bk-action-row"><a href="https://maps.google.com/?q=26.3198,127.7574" target="_blank" class="bk-btn maps">📍 Google Maps</a><a href="https://www.rihga.co.jp/okinawa-chatan" target="_blank" class="bk-btn secondary">🌐 官網</a><a href="tel:+81988589090" class="bk-btn primary">📞 飯店</a></div></div>
+    </div>
+    <!-- Family 租車 -->
+    <div class="booking-card" id="m-bk-car"><div class="bk-header" onclick="toggleBk('m-bk-car')"><div class="bk-icon" style="background:var(--mint-light)">🚗</div><div><div class="bk-title">Family 租車｜赤嶺（trip.com 預訂）</div><div class="bk-sub">D1 取車 · D5 還車</div></div><span class="bk-toggle">▾</span></div>
+      <div class="bk-body"><div class="bk-detail-grid"><div class="bk-detail-item"><div class="bk-detail-label">兒童座椅</div><div class="bk-detail-val">×1（5歲）</div></div><div class="bk-detail-item"><div class="bk-detail-label">D1 預計取車</div><div class="bk-detail-val">19:15</div></div><div class="bk-detail-item"><div class="bk-detail-label">營業時間</div><div class="bk-detail-val">09:30–23:00</div></div><div class="bk-detail-item"><div class="bk-detail-label">MAPCODE</div><div class="bk-detail-val highlight">33 064 264*33</div></div><div class="bk-detail-item bk-detail-full"><div class="bk-detail-label">地址 / 交通</div><div class="bk-detail-val">那覇市宇栄原3-16-47（赤嶺駅徒歩 9 分）D1 搭計程車前往</div></div></div><div class="bk-separator"></div><div class="bk-action-row"><a href="https://maps.google.com/?q=26.1930,127.6670" target="_blank" class="bk-btn maps">📍 Family 位置</a><a href="tel:+81988513202" class="bk-btn primary">📞 098-851-3202</a></div></div>
+    </div>
+    <!-- 美麗海水族館 -->
+    <div class="booking-card" id="m-bk-churaumi"><div class="bk-header" onclick="toggleBk('m-bk-churaumi')"><div class="bk-icon" style="background:#E8F8EF">🐠</div><div><div class="bk-title">美麗海水族館</div><div class="bk-sub">Day 2 · 北部 · 建議網路購票</div></div><span class="bk-toggle">▾</span></div>
+      <div class="bk-body"><div class="bk-detail-grid"><div class="bk-detail-item"><div class="bk-detail-label">MAPCODE</div><div class="bk-detail-val highlight">553 075 797*74</div></div><div class="bk-detail-item"><div class="bk-detail-label">開館時間</div><div class="bk-detail-val">08:30–18:30</div></div><div class="bk-detail-item"><div class="bk-detail-label">成人票</div><div class="bk-detail-val">2,180円</div></div><div class="bk-detail-item"><div class="bk-detail-label">6歲未滿</div><div class="bk-detail-val">免費！</div></div></div><div class="bk-separator"></div><div class="bk-action-row"><a href="https://maps.google.com/?q=26.6936,127.8778" target="_blank" class="bk-btn maps">📍 Google Maps</a><a href="https://churaumi.okinawa/" target="_blank" class="bk-btn secondary">🌐 官網</a><a href="https://www.klook.com/zh-TW/activity/okinawa-churaumi-aquarium/" target="_blank" class="bk-btn primary">🎟 Klook 購票</a></div></div>
+    </div>
+    <!-- DMM -->
+    <div class="booking-card" id="m-bk-dmm"><div class="bk-header" onclick="toggleBk('m-bk-dmm')"><div class="bk-icon" style="background:var(--sky-light)">🎟</div><div><div class="bk-title">DMM Kariyushi 水族館</div><div class="bk-sub">Day 4 · iias 豐崎</div></div><span class="bk-toggle">▾</span></div>
+      <div class="bk-body"><div class="bk-detail-grid"><div class="bk-detail-item"><div class="bk-detail-label">MAPCODE</div><div class="bk-detail-val highlight">232 543 400*25</div></div><div class="bk-detail-item"><div class="bk-detail-label">營業時間</div><div class="bk-detail-val">09:00–20:00</div></div><div class="bk-detail-item"><div class="bk-detail-label">成人票</div><div class="bk-detail-val">約 2,400円</div></div><div class="bk-detail-item"><div class="bk-detail-label">3歲以下</div><div class="bk-detail-val">免費</div></div></div><div class="bk-separator"></div><div class="bk-action-row"><a href="https://maps.google.com/?q=26.1563,127.6508" target="_blank" class="bk-btn maps">📍 Google Maps</a><a href="https://kariyushi-aquarium.com/" target="_blank" class="bk-btn secondary">🌐 官網</a><a href="https://www.klook.com/zh-TW/activity/16009-dmm-kariyushi-aquarium-okinawa/" target="_blank" class="bk-btn primary">🎟 Klook</a></div></div>
+    </div>
+    <!-- 琉裝美人 -->
+    <div class="booking-card" id="m-bk-ryuso"><div class="bk-header" onclick="toggleBk('m-bk-ryuso')"><div class="bk-icon" style="background:var(--mei-light)">👘</div><div><div class="bk-title">琉裝美人</div><div class="bk-sub">Day 3 · 出發前一週預約（看天氣）</div></div><span class="bk-toggle">▾</span></div>
+      <div class="bk-body"><div class="bk-detail-grid"><div class="bk-detail-item"><div class="bk-detail-label">著裝開始</div><div class="bk-detail-val">10:30</div></div><div class="bk-detail-item"><div class="bk-detail-label">歸還時間</div><div class="bk-detail-val">13:30</div></div><div class="bk-detail-item"><div class="bk-detail-label">5歲兒童款</div><div class="bk-detail-val">需確認庫存</div></div><div class="bk-detail-item"><div class="bk-detail-label">預約條件</div><div class="bk-detail-val">晴天才預約</div></div></div><div class="bk-separator"></div><div class="bk-action-row"><a href="https://maps.google.com/?q=26.2123,127.6792" target="_blank" class="bk-btn maps">📍 國際通附近</a><a href="tel:+81988000000" class="bk-btn primary">📞 工作室</a></div></div>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-booking-mei -->
+
 
 <!-- ── SECTION: 緊急資訊 ── -->
 <div id="sec-emergency" class="page-section">
@@ -2354,10 +2661,16 @@
 <div class="main">
 
   <div class="section-title" style="margin-top:20px">✅ 行前確認清單</div>
+  <div style="background:#E8F8EF;border:1.5px solid var(--mint);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1A8050;line-height:1.7">✅ 勾選後自動儲存，下次開啟進度保留（兩家各自獨立）</div>
 
-  <div style="background:#E8F8EF;border:1.5px solid var(--mint);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1A8050;line-height:1.7">
-    ✅ 勾選後自動儲存，下次開啟進度保留
+  <!-- 家庭切換 tabs in checklist -->
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <button id="cl-tab-yu" onclick="switchClFamily('yu')" style="flex:1;padding:8px 0;border-radius:999px;border:2px solid var(--ocean);background:var(--ocean);color:white;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer">🌊 羽家</button>
+    <button id="cl-tab-mei" onclick="switchClFamily('mei')" style="flex:1;padding:8px 0;border-radius:999px;border:2px solid #D8C8F5;background:white;color:var(--mei);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer">🌸 渼家</button>
   </div>
+
+  <!-- 羽家清單 -->
+  <div id="cl-yu">
 
   <!-- 訂票 & 預訂類 -->
   <div class="booking-card" id="cl-tickets" style="margin-bottom:10px">
@@ -2480,43 +2793,56 @@
     </div>
   </div>
 
+
+  </div><!-- /cl-yu -->
+
+  <!-- 渼家清單 -->
+  <div id="cl-mei" style="display:none">
+  <div class="booking-card" id="m-cl-week" style="margin-bottom:10px"><div class="bk-header" onclick="toggleBk('m-cl-week')" style="padding:12px 16px"><div class="bk-icon" style="background:var(--sun-light)">📅</div><div><div class="bk-title">出發一週前</div></div><span class="bk-toggle">▾</span></div>
+    <div class="bk-body"><div class="checklist" data-family="mei">
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">確認沖繩天氣，晴天才預約琉裝美人（雨天穿不了琉裝）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">預約推車完成（<a href="https://share.google/zEb4AvHYuZI4Zdsd6" target="_blank" style="color:var(--mei)">📋 預約資訊連結</a>）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">美麗海水族館 Klook/KKday 網路購票（比現場便宜、QR 免排隊）</div></div>
+    </div></div>
+  </div>
+
+  <div class="booking-card" id="m-cl-tickets" style="margin-bottom:10px"><div class="bk-header" onclick="toggleBk('m-cl-tickets')" style="padding:12px 16px"><div class="bk-icon" style="background:var(--mei-light)">🎟</div><div><div class="bk-title">門票 & 預約</div></div><span class="bk-toggle">▾</span></div>
+    <div class="bk-body"><div class="checklist" data-family="mei">
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">DMM 水族館 網路購票</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">燒肉本部牧場 提前電話訂位（D4 晚餐若要去）</div></div>
+    </div></div>
+  </div>
+
+  <div class="booking-card" id="m-cl-stay" style="margin-bottom:10px"><div class="bk-header" onclick="toggleBk('m-cl-stay')" style="padding:12px 16px"><div class="bk-icon" style="background:var(--coral-light)">🏨</div><div><div class="bk-title">住宿 & 租車</div></div><span class="bk-toggle">▾</span></div>
+    <div class="bk-body"><div class="checklist" data-family="mei">
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">Family 租車 trip.com 訂單確認信列印或截圖備用</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">麗嘉訂單確認（20260515-1309）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">D5 還車前加油站位置確認（赤嶺周邊）</div></div>
+    </div></div>
+  </div>
+
+  <div class="booking-card" id="m-cl-prep" style="margin-bottom:10px"><div class="bk-header" onclick="toggleBk('m-cl-prep')" style="padding:12px 16px"><div class="bk-icon" style="background:var(--mint-light)">🎒</div><div><div class="bk-title">出發前準備</div></div><span class="bk-toggle">▾</span></div>
+    <div class="bk-body"><div class="checklist" data-family="mei">
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">日本 eSIM / Wi-Fi 確認</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">護照有效期確認（全員）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">兒童常備藥：退燒藥、止瀉藥、防蚊液</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">換日元、信用卡通知境外消費</div></div>
+    </div></div>
+  </div>
+
+  <div class="booking-card" id="m-cl-flight" style="margin-bottom:10px"><div class="bk-header" onclick="toggleBk('m-cl-flight')" style="padding:12px 16px"><div class="bk-icon" style="background:#FFE8E8">✈️</div><div><div class="bk-title">機場 & 當天確認</div></div><span class="bk-toggle">▾</span></div>
+    <div class="bk-body"><div class="checklist" data-family="mei">
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">去程 MM924 樂桃線上 Check-in（出發前 24H 開放）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">回程 VZ569 線上 Check-in（出發前 24H 開放）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">D5 還車前先加油（Family 附近加油站）</div></div>
+      <div class="check-item" onclick="checkToggleMei(this)"><div class="check-box">✓</div><div class="check-text">D1 抵達後通知羽家出關進度，更新會師時間</div></div>
+    </div></div>
+  </div>
+
+  </div><!-- /cl-mei -->
+
 </div>
 </div><!-- /sec-checklist -->
-
-
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-illus">
-    <svg width="120" height="48" viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
-      <!-- 手繪沖繩風景 -->
-      <!-- 海 -->
-      <path d="M0 32 Q20 26 40 32 Q60 38 80 30 Q100 22 120 30 L120 48 L0 48Z" fill="#D0EEFF"/>
-      <!-- 棕櫚樹 L -->
-      <line x1="12" y1="48" x2="14" y2="20" stroke="#7EC850" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M14 22 Q4 14 0 18 Q6 18 10 26" fill="#7EC850"/>
-      <path d="M14 24 Q22 14 26 18 Q20 20 16 28" fill="#7EC850"/>
-      <!-- 棕櫚樹 R -->
-      <line x1="108" y1="48" x2="106" y2="20" stroke="#7EC850" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M106 22 Q96 14 92 18 Q98 18 102 26" fill="#7EC850"/>
-      <path d="M106 24 Q114 14 118 18 Q112 20 108 28" fill="#7EC850"/>
-      <!-- 太陽 -->
-      <circle cx="60" cy="14" r="8" fill="#FFD166"/>
-      <line x1="60" y1="3" x2="60" y2="0" stroke="#FFD166" stroke-width="1.5"/>
-      <line x1="71" y1="6" x2="73" y2="4" stroke="#FFD166" stroke-width="1.5"/>
-      <line x1="49" y1="6" x2="47" y2="4" stroke="#FFD166" stroke-width="1.5"/>
-      <!-- 小鳥 -->
-      <path d="M35 10 Q37 8 39 10" stroke="#2B9EB3" stroke-width="1.2" fill="none"/>
-      <path d="M75 8 Q77 6 79 8" stroke="#2B9EB3" stroke-width="1.2" fill="none"/>
-    </svg>
-  </div>
-  雙寶的第一次出國，一定會是最棒的回憶 🌺<br>
-  <span style="color: var(--ocean-dark); font-weight: 700; font-family: 'Nunito', sans-serif;">羽家加油！你們可以的 💪</span>
-</div>
-
-
-
-
-
 
 
 <!-- ══ SECTION: 必買必吃圖鑑 ══ -->
@@ -2552,6 +2878,37 @@
 </style>
 
 <!-- ══ BOTTOM TAB BAR ══ -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-illus">
+    <svg width="120" height="48" viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+      <!-- 手繪沖繩風景 -->
+      <!-- 海 -->
+      <path d="M0 32 Q20 26 40 32 Q60 38 80 30 Q100 22 120 30 L120 48 L0 48Z" fill="#D0EEFF"/>
+      <!-- 棕櫚樹 L -->
+      <line x1="12" y1="48" x2="14" y2="20" stroke="#7EC850" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M14 22 Q4 14 0 18 Q6 18 10 26" fill="#7EC850"/>
+      <path d="M14 24 Q22 14 26 18 Q20 20 16 28" fill="#7EC850"/>
+      <!-- 棕櫚樹 R -->
+      <line x1="108" y1="48" x2="106" y2="20" stroke="#7EC850" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M106 22 Q96 14 92 18 Q98 18 102 26" fill="#7EC850"/>
+      <path d="M106 24 Q114 14 118 18 Q112 20 108 28" fill="#7EC850"/>
+      <!-- 太陽 -->
+      <circle cx="60" cy="14" r="8" fill="#FFD166"/>
+      <line x1="60" y1="3" x2="60" y2="0" stroke="#FFD166" stroke-width="1.5"/>
+      <line x1="71" y1="6" x2="73" y2="4" stroke="#FFD166" stroke-width="1.5"/>
+      <line x1="49" y1="6" x2="47" y2="4" stroke="#FFD166" stroke-width="1.5"/>
+      <!-- 小鳥 -->
+      <path d="M35 10 Q37 8 39 10" stroke="#2B9EB3" stroke-width="1.2" fill="none"/>
+      <path d="M75 8 Q77 6 79 8" stroke="#2B9EB3" stroke-width="1.2" fill="none"/>
+    </svg>
+  </div>
+  雙寶的第一次出國，一定會是最棒的回憶 🌺<br>
+  <span style="color: var(--ocean-dark); font-weight: 700; font-family: 'Nunito', sans-serif;">羽家加油！你們可以的 💪</span>
+</div>
+
+
 <div class="tab-bar">
   <button class="tab-item active" id="tab-itinerary" onclick="switchTab('itinerary')">
     <span class="tab-icon">🗓</span>
@@ -2570,7 +2927,7 @@
     <span class="tab-label">行前</span>
   </button>
   <button class="tab-item" id="tab-guide" onclick="switchTab('guide')">
-    <span class="tab-icon">📸</span>
+    <span class="tab-icon">🛍</span>
     <span class="tab-label">圖鑑</span>
   </button>
 </div>
@@ -2592,59 +2949,131 @@
 </div>
 
 <script>
-// ── Tab 切換 ──
-function switchTab(name) {
-  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-  document.getElementById('sec-' + name).classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
-  window.scrollTo({top: 0, behavior: 'smooth'});
+// ══════════════════════════════════════
+// FAMILY STATE
+// ══════════════════════════════════════
+var currentFamily = 'yu';
+
+function switchFamily(fam) {
+  currentFamily = fam;
+  var body = document.body;
+
+  // body class for CSS colour theming
+  body.classList.toggle('family-mei', fam === 'mei');
+
+  // pill buttons
+  document.getElementById('pill-yu').classList.toggle('active', fam === 'yu');
+  document.getElementById('pill-mei').classList.toggle('active', fam === 'mei');
+
+  // pill active text colour
+  document.getElementById('pill-yu').style.color = fam === 'yu' ? 'var(--ocean-dark)' : '';
+  document.getElementById('pill-mei').style.color = fam === 'mei' ? 'var(--mei)' : '';
+
+  // dynamic header text
+  if (fam === 'yu') {
+    document.getElementById('header-emoji').textContent = '🌺';
+    document.getElementById('header-title').textContent = '沖繩初體驗・羽家行程手帳';
+    document.getElementById('header-sub').textContent = '第一次帶雙寶出國，一起衝！🌊';
+    document.getElementById('header-badge3').textContent = '🚗 雙車雙家同行';
+  } else {
+    document.getElementById('header-emoji').textContent = '🌸';
+    document.getElementById('header-title').textContent = '沖繩初體驗・渼家行程手帳';
+    document.getElementById('header-sub').textContent = '5歲小探險家的沖繩初登場！🐠';
+    document.getElementById('header-badge3').textContent = '✈️ 樂桃 MM924';
+  }
+
+  // re-route itinerary & booking tabs to family-specific sections
+  // then re-trigger current tab if it's itinerary or booking
+  var cur = document.querySelector('.tab-item.active');
+  var curId = cur ? cur.id : 'tab-itinerary';
+  if (curId === 'tab-itinerary' || curId === 'tab-booking') {
+    switchTab(curId.replace('tab-',''));
+  }
+
+  // sync checklist family sub-tabs
+  syncClFamily(fam);
 }
 
-// ── Day 快速跳轉 ──
+// ══════════════════════════════════════
+// TAB SWITCHING
+// ══════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.page-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.tab-item').forEach(function(t){ t.classList.remove('active'); });
+
+  var secId;
+  if (name === 'itinerary') {
+    secId = 'sec-itinerary-' + currentFamily;
+  } else if (name === 'booking') {
+    secId = 'sec-booking-' + currentFamily;
+  } else {
+    secId = 'sec-' + name;
+  }
+
+  var sec = document.getElementById(secId);
+  if (sec) sec.classList.add('active');
+  var tab = document.getElementById('tab-' + name);
+  if (tab) tab.classList.add('active');
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  if (name === 'guide') renderGuide('all');
+}
+
+// ══════════════════════════════════════
+// DAY JUMP (羽家)
+// ══════════════════════════════════════
 function jumpDay(id) {
-  const el = document.getElementById(id);
+  var el = document.getElementById(id);
   if (!el) return;
   if (!el.classList.contains('open')) el.classList.add('open');
-  setTimeout(() => el.scrollIntoView({behavior: 'smooth', block: 'start'}), 50);
-  // 高亮 tab
-  document.querySelectorAll('.top-tab').forEach(t => t.classList.remove('active'));
-  const map = {d1:0,d2:1,d3:2,d4:3,d5:4,'checklist-card':5};
-  const tabs = document.querySelectorAll('.top-tab');
+  setTimeout(function(){ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+  var map = {d1:0,d2:1,d3:2,d4:3,d5:4};
+  document.querySelectorAll('#sec-itinerary-yu .top-tab').forEach(function(t){ t.classList.remove('active'); });
+  var tabs = document.querySelectorAll('#sec-itinerary-yu .top-tab');
   if (map[id] !== undefined && tabs[map[id]]) tabs[map[id]].classList.add('active');
 }
 
-// ── 折疊卡片 ──
-function toggle(id) {
-  document.getElementById(id).classList.toggle('open');
-}
-function toggleCrew() {
-  document.getElementById('crew-card').classList.toggle('open');
-}
-function toggleBk(id) {
-  document.getElementById(id).classList.toggle('open');
-}
-function toggleEc(id) {
-  document.getElementById(id).classList.toggle('open');
+// ══════════════════════════════════════
+// DAY JUMP (渼家)
+// ══════════════════════════════════════
+function jumpDay_mei(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  if (!el.classList.contains('open')) el.classList.add('open');
+  setTimeout(function(){ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+  var map = {'m-d1':0,'m-d2':1,'m-d3':2,'m-d4':3,'m-d5':4};
+  document.querySelectorAll('#sec-itinerary-mei .top-tab').forEach(function(t){ t.classList.remove('active'); });
+  var tabs = document.querySelectorAll('#sec-itinerary-mei .top-tab');
+  if (map[id] !== undefined && tabs[map[id]]) tabs[map[id]].classList.add('active');
 }
 
-// ── 打勾清單 ──
+// ══════════════════════════════════════
+// COLLAPSE CARDS
+// ══════════════════════════════════════
+function toggle(id) { var el = document.getElementById(id); if(el) el.classList.toggle('open'); }
+function toggleCrew() { var el = document.getElementById('crew-card'); if(el) el.classList.toggle('open'); }
+function toggleBk(id) { var el = document.getElementById(id); if(el) el.classList.toggle('open'); }
+function toggleEc(id) { var el = document.getElementById(id); if(el) el.classList.toggle('open'); }
+
+// ══════════════════════════════════════
+// CHECKLIST — 羽家
+// ══════════════════════════════════════
 function checkToggle(item) {
-  const box = item.querySelector('.check-box');
-  const text = item.querySelector('.check-text');
+  var box = item.querySelector('.check-box');
+  var text = item.querySelector('.check-text');
   box.classList.toggle('checked');
   text.classList.toggle('done');
   saveChecklist();
 }
 function saveChecklist() {
-  const items = document.querySelectorAll('.check-item');
-  const states = Array.from(items).map(i => i.querySelector('.check-box').classList.contains('checked'));
+  var items = document.querySelectorAll('#cl-yu .check-item');
+  var states = Array.from(items).map(function(i){ return i.querySelector('.check-box').classList.contains('checked'); });
   try { localStorage.setItem('okinawa_羽家_checklist', JSON.stringify(states)); } catch(e) {}
 }
 function loadChecklist() {
   try {
-    const saved = JSON.parse(localStorage.getItem('okinawa_羽家_checklist') || '[]');
-    document.querySelectorAll('.check-item').forEach((item, i) => {
+    var saved = JSON.parse(localStorage.getItem('okinawa_羽家_checklist') || '[]');
+    document.querySelectorAll('#cl-yu .check-item').forEach(function(item, i){
       if (saved[i]) {
         item.querySelector('.check-box').classList.add('checked');
         item.querySelector('.check-text').classList.add('done');
@@ -2653,7 +3082,54 @@ function loadChecklist() {
   } catch(e) {}
 }
 
-// ── Modal 景點資料 ──
+// ══════════════════════════════════════
+// CHECKLIST — 渼家
+// ══════════════════════════════════════
+function checkToggleMei(item) {
+  var box = item.querySelector('.check-box');
+  var text = item.querySelector('.check-text');
+  box.classList.toggle('checked');
+  text.classList.toggle('done');
+  saveChecklistMei();
+}
+function saveChecklistMei() {
+  var items = document.querySelectorAll('#cl-mei .check-item');
+  var states = Array.from(items).map(function(i){ return i.querySelector('.check-box').classList.contains('checked'); });
+  try { localStorage.setItem('okinawa_渼家_checklist_v2', JSON.stringify(states)); } catch(e) {}
+}
+function loadChecklistMei() {
+  try {
+    var saved = JSON.parse(localStorage.getItem('okinawa_渼家_checklist_v2') || '[]');
+    document.querySelectorAll('#cl-mei .check-item').forEach(function(item, i){
+      if (saved[i]) {
+        item.querySelector('.check-box').classList.add('checked');
+        item.querySelector('.check-text').classList.add('done');
+      }
+    });
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════
+// CHECKLIST FAMILY SUB-TABS
+// ══════════════════════════════════════
+function switchClFamily(fam) {
+  document.getElementById('cl-yu').style.display = fam === 'yu' ? '' : 'none';
+  document.getElementById('cl-mei').style.display = fam === 'mei' ? '' : 'none';
+  var btnYu = document.getElementById('cl-tab-yu');
+  var btnMei = document.getElementById('cl-tab-mei');
+  if (fam === 'yu') {
+    btnYu.style.background = 'var(--ocean)'; btnYu.style.borderColor = 'var(--ocean)'; btnYu.style.color = 'white';
+    btnMei.style.background = 'white'; btnMei.style.borderColor = 'var(--mei-mid)'; btnMei.style.color = 'var(--mei)';
+  } else {
+    btnMei.style.background = 'var(--mei)'; btnMei.style.borderColor = 'var(--mei)'; btnMei.style.color = 'white';
+    btnYu.style.background = 'white'; btnYu.style.borderColor = '#D6EEF6'; btnYu.style.color = 'var(--ocean)';
+  }
+}
+function syncClFamily(fam) { switchClFamily(fam); }
+
+// ══════════════════════════════════════
+// MODAL — 羽家 SPOTS
+// ══════════════════════════════════════
 const SPOTS = {
   hotel: {
     emoji: '🏨',
@@ -2898,17 +3374,90 @@ function closeModalOutside(e) {
     document.body.style.overflow = '';
   };
 
-  // 切到圖鑑 tab 時才渲染（避免提早觸發 404）
-  var _origSwitch = window.switchTab;
-  window.switchTab = function(name) {
-    _origSwitch(name);
-    if (name === 'guide') renderGuide('all');
-  };
+  // guide rendering handled in switchTab directly
 })();
+
+
+// ══════════════════════════════════════
+// MODAL — 渼家 SPOTS
+// ══════════════════════════════════════
+const MEI_SPOTS = {
+  hotel: {
+    emoji:'🏨', title:'麗嘉皇家度假酒店 北谷', subtitle:'沖縄県北谷町美浜15-69',
+    info:[{label:'電話',val:'098-858-9090'},{label:'Check-in',val:'15:00'},{label:'Check-out',val:'11:00'},{label:'訂單 (渼家)',val:'20260515-1309'},{label:'MAPCODE',val:'33 525 209*88'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.3198,127.7574',cls:'maps-btn'},{label:'🌐 官網',url:'https://www.rihga.co.jp/okinawa-chatan',cls:'info-btn'},{label:'📞 飯店電話',url:'tel:+81988589090',cls:'book-btn'}],
+    note:'D1 預計 20:00–20:30 抵達。推車可在前台寄放。'
+  },
+  familycar: {
+    emoji:'🚗', title:'Family 租車（ファミリーレンタカー沖縄）', subtitle:'那覇市宇栄原3-16-47',
+    info:[{label:'電話',val:'098-851-3202'},{label:'營業時間',val:'09:30–23:00'},{label:'MAPCODE',val:'33 064 264*33'},{label:'預訂平台',val:'trip.com'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.1930,127.6670',cls:'maps-btn'},{label:'📞 租車電話',url:'tel:+81988513202',cls:'book-btn'}],
+    note:'D1 搭計程車前往（機場送迎 17:30 截止趕不上），營業至 23:00 時間充裕。D5 還車後搭送迎或 taxi 去機場。'
+  },
+  churaumi: {
+    emoji:'🐠', title:'沖繩美麗海水族館', subtitle:'海洋博公園內・本部町',
+    info:[{label:'MAPCODE',val:'553 075 797*74'},{label:'開館時間',val:'08:30–18:30'},{label:'成人票',val:'2,180円'},{label:'6歲未滿',val:'免費！'},{label:'停車',val:'P7 北門（免費）'},{label:'所需時間',val:'約 2 小時'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.6936,127.8778',cls:'maps-btn'},{label:'🌐 官網',url:'https://churaumi.okinawa/',cls:'info-btn'},{label:'🎟 Klook 購票',url:'https://www.klook.com/zh-TW/activity/okinawa-churaumi-aquarium/',cls:'book-btn'}],
+    note:'5 月中旬為通常期，08:30 開館。建議停 P7 北門立體停車場最近水族館入口。海豚劇場場次：11:00 / 13:00。'
+  },
+  kouri: {
+    emoji:'🦐', title:'古宇利島蝦蝦飯（KOURI SHRIMP）', subtitle:'古宇利島・過橋右轉 3 分鐘',
+    info:[{label:'MAPCODE',val:'485 692 168*56'},{label:'營業時間',val:'11:00–16:00'},{label:'訂位',val:'不需要（現場排隊）'},{label:'停車',val:'免費停車場'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.7020,127.8830',cls:'maps-btn'}],
+    note:'蒜香奶油蝦飯必點！有室內座位和頂樓海景座位。廁所有換尿布台，親子友善。平日 5 月中旬不太排隊。'
+  },
+  parco: {
+    emoji:'🛍', title:'PARCO CITY', subtitle:'浦添市西洲3-1-1',
+    info:[{label:'MAPCODE',val:'33 308 868*53'},{label:'營業時間',val:'10:00–22:00'},{label:'停車',val:'免費'},{label:'距北谷',val:'車程約 15 分'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.2913,127.7082',cls:'maps-btn'},{label:'🌐 官網',url:'https://www.parco.jp/parcocity/',cls:'info-btn'}],
+    note:'3F namco 兒童設施讓孩子放電，大人繼續逛！3F 展望台 5 月日落約 19:00。藥妝、童裝、伴手禮一站搞定。'
+  },
+  ryuso: {
+    emoji:'👘', title:'琉裝美人', subtitle:'國際通附近',
+    info:[{label:'著裝開始',val:'10:30'},{label:'歸還時間',val:'13:30'},{label:'5歲兒童款',val:'需確認庫存'},{label:'預約條件',val:'晴天才預約'}],
+    actions:[{label:'📍 國際通附近',url:'https://maps.google.com/?q=26.2123,127.6792',cls:'maps-btn'}],
+    note:'出發前一週確認天氣是晴天才預約。預約時告知：10:30 著裝、13:30 歸還。5歲兒童款式多元超可愛！'
+  },
+  naminouegu: {
+    emoji:'⛩', title:'波上宮', subtitle:'那霸市若狭1-25-11',
+    info:[{label:'MAPCODE',val:'33 185 122*55'},{label:'參拜',val:'免費'},{label:'停留時間',val:'30–45 分'},{label:'距工作室',val:'步行 15 分'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.2176,127.6741',cls:'maps-btn'}],
+    note:'穿著琉裝在石段拍攝超好看！旁邊是波之上海灘，可接著去踩沙。從工作室步行最方便。'
+  },
+  dmm: {
+    emoji:'🐧', title:'DMM Kariyushi 水族館', subtitle:'iias 沖縄豊崎 1–2F',
+    info:[{label:'MAPCODE',val:'232 543 400*25'},{label:'營業時間',val:'09:00–20:00'},{label:'5歲票價',val:'約 1,200円'},{label:'停車',val:'iias 免費'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.1563,127.6508',cls:'maps-btn'},{label:'🌐 官網',url:'https://kariyushi-aquarium.com/',cls:'info-btn'},{label:'🎟 Klook',url:'https://www.klook.com/zh-TW/activity/16009-dmm-kariyushi-aquarium-okinawa/',cls:'book-btn'}],
+    note:'入館後先確認餵食體驗（企鵝/樹懶）當天時段並登記，限額容易售完。'
+  },
+  senaga: {
+    emoji:'🌊', title:'瀨長島 Umikaji Terrace', subtitle:'沖縄県豊見城市瀬長174-6',
+    info:[{label:'MAPCODE',val:'33 002 470*30'},{label:'足湯',val:'免費（24小時）'},{label:'與 Family 距離',val:'車程約 15 分'},{label:'停車',val:'免費'}],
+    actions:[{label:'📍 Google Maps',url:'https://maps.google.com/?q=26.1483,127.6583',cls:'maps-btn'},{label:'🌐 官網',url:'https://www.umikajiterrace.com/',cls:'info-btn'}],
+    note:'D5 流程：北谷(09:30) → 瀨長島(10:00–11:15) → 加油 → Family 還車(11:30) → taxi/送迎 → 機場(12:15)。'
+  }
+};
+
+function openModalMei(key) {
+  var spot = MEI_SPOTS[key]; if (!spot) return;
+  document.getElementById('modal-emoji').textContent = spot.emoji;
+  document.getElementById('modal-title').textContent = spot.title;
+  document.getElementById('modal-subtitle').textContent = spot.subtitle;
+  var h = '<div class="modal-info-grid">';
+  spot.info.forEach(function(i){ h += '<div class="modal-info-item"><div class="modal-info-label">'+i.label+'</div><div class="modal-info-val">'+i.val+'</div></div>'; });
+  h += '</div><div class="modal-action-stack">';
+  spot.actions.forEach(function(a){ h += '<a href="'+a.url+'" target="_blank" class="modal-btn '+a.cls+'">'+a.label+'</a>'; });
+  h += '</div>';
+  if (spot.note) h += '<div class="modal-note">💡 '+spot.note+'</div>';
+  document.getElementById('modal-body').innerHTML = h;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
 // ── 初始化 ──
 document.getElementById('d1').classList.add('open');
 loadChecklist();
+loadChecklistMei();
 </script>
 
 </body>
